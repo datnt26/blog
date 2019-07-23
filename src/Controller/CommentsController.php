@@ -17,8 +17,38 @@ class CommentsController extends AppController
      *
      * @return \Cake\Http\Response|null
      */
-    public function index()
-    {
+    public function index() {
+        $data = array();
+        /******** find all *********/
+        /*
+            $query = $this->Comments->find('all');
+            //By default queries and result sets will return Entities objects. You can retrieve basic arrays by disabling hydration:
+            $query->enableHydration(false);
+            $data = $query->toArray();
+        */
+
+        /******** find first *********/
+        /*
+            $query = $this->Comments->find()->first();
+            $data = $query->toArray();
+        */
+
+        /******** find list *********/
+        /*
+            $options = array();
+            $options['keyField'] = 'id';
+            $options['valueField'] = function ($comment) {
+                                        return $comment->get('label');
+                                    };
+            $options['groupField'] = 'userId';
+
+            $query = $this->Comments->find('list',$options);
+            $data = $query->toArray();
+        */
+        $query = $this->Comments->find('list');
+        $data = $query->toArray();
+        $this->log($data);
+
         $this->paginate = [
             'contain' => ['ParentComments']
         ];
