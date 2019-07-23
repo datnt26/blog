@@ -36,4 +36,8 @@ class Comment extends Entity
         'parent_comment' => true,
         'child_comments' => true
     ];
+
+    protected function _getLabel() {
+        return $this->_properties['id'] . ' - ' . $this->_properties['message'];
+    }
 }

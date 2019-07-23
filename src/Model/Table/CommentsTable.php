@@ -36,7 +36,10 @@ class CommentsTable extends Table
         parent::initialize($config);
 
         $this->setTable('comments');
-        $this->setDisplayField('id');
+        /* 
+            <== set value for result in find list ==>
+            $this->setDisplayField('label');
+        */
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
