@@ -44,13 +44,8 @@ class CommentsTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('ParentComments', [
-            'className' => 'Comments',
-            'foreignKey' => 'parent_id'
-        ]);
-        $this->hasMany('ChildComments', [
-            'className' => 'Comments',
-            'foreignKey' => 'parent_id'
+        $this->belongsTo('Users', [
+            'foreignKey' => 'userId'
         ]);
     }
 

@@ -45,13 +45,17 @@ class CommentsController extends AppController
             $query = $this->Comments->find('list',$options);
             $data = $query->toArray();
         */
-        $query = $this->Comments->find('list');
-        $data = $query->toArray();
+
+        /******** find threaded *********/
+        /*
+            $options = array();
+            $options['contain'] = array('Users');
+            $query = $this->Comments->find('threaded',$options);
+            $data = $query->toArray();
+        */
+
         $this->log($data);
 
-        $this->paginate = [
-            'contain' => ['ParentComments']
-        ];
         $comments = $this->paginate($this->Comments);
 
         $this->set(compact('comments'));
