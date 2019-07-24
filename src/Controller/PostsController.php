@@ -17,8 +17,14 @@ class PostsController extends AppController
      *
      * @return \Cake\Http\Response|null
      */
-    public function index()
-    {
+    public function index() { 
+        /******  virtual fields  ******/
+        /*
+            $query = $this->Posts->find();
+            foreach ($query as $value) {
+                $this->log($value);
+            }
+        */
         $this->paginate = [
             'contain' => ['Users']
         ];
