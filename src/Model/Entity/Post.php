@@ -36,6 +36,7 @@ class Post extends Entity
     protected $_virtual = ['full_name'];
     
     protected function _getFullName() {
+        
         return $this->id . '  ' . $this->content;
     }
 }

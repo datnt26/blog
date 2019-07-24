@@ -25,6 +25,7 @@ class PostsController extends AppController
                 $this->log($value);
             }
         */
+        $this->log($this->requestAction('/comments/getAllComment'));
         $this->paginate = [
             'contain' => ['Users']
         ];
