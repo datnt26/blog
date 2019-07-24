@@ -61,6 +61,15 @@ class CommentsController extends AppController
         $this->set(compact('comments'));
     }
 
+    public function getAllComment() {
+        $this->layout = false;
+        $this->autoRender = false;
+
+        $this->response->body(json_encode('haha'));
+
+        return $this->response;
+    }
+
     /**
      * View method
      *
