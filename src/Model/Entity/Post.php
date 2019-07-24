@@ -32,4 +32,10 @@ class Post extends Entity
         'modified' => true,
         'user' => true
     ];
+     /* virtual fields */
+    protected $_virtual = ['full_name'];
+    
+    protected function _getFullName() {
+        return $this->id . '  ' . $this->content;
+    }
 }
