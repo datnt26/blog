@@ -25,13 +25,22 @@ class PostsController extends AppController
                 $this->log($value);
             }
         */
-        $this->log($this->requestAction('/comments/getAllComment'));
-        $this->paginate = [
-            'contain' => ['Users']
-        ];
-        $posts = $this->paginate($this->Posts);
 
-        $this->set(compact('posts'));
+        /****** format result ******/
+        $options = array();
+        $options['contain'] = array('Users');
+        $posts = $this->Posts->find('all',$options);
+            
+        $posts->formatResults(function (\Cake\Collection\CollectionInterface $results) {
+            return $results->map(function ($row) {
+                $row['Comment'] = json_decode($this->requestAction('/comments/getAllComment/' . $row['id']));
+                return $row;
+            });
+        });
+
+        $avatarCurrentUser = '/img/ehm-2.jpg';
+        $title = 'Timeline';
+        $this->set(compact('title','avatarCurrentUser','posts'));
     }
 
     /**
