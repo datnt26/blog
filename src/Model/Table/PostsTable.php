@@ -44,6 +44,10 @@ class PostsTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);
+        $this->hasMany('Comments', [
+            'foreignKey' => 'postId',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**

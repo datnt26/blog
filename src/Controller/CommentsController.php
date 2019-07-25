@@ -61,11 +61,17 @@ class CommentsController extends AppController
         $this->set(compact('comments'));
     }
 
-    public function getAllComment() {
+    public function getAllComment($postId) {
         $this->layout = false;
         $this->autoRender = false;
 
-        $this->response->body(json_encode('haha'));
+        if (!$postId) return;
+        $options = array();
+        $options['conditions'] = array('Comments.postId' => $postId);
+        $options['contain'] = array('Users');
+        $query = $this->Comments->find('threaded',$options);
+        $data = $query->toArray();
+        $this->response->body(json_encode($data));
 
         return $this->response;
     }
