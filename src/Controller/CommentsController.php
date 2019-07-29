@@ -54,6 +54,11 @@ class CommentsController extends AppController
             $data = $query->toArray();
         */
 
+        /******** Custom Finder Methods *********/
+        /*
+            $query = $this->Comments->find('ownedBy', ['commentId' => 1]);
+            $data = $query->toArray();
+        */
         $this->log($data);
 
         $comments = $this->paginate($this->Comments);

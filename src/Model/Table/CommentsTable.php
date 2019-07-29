@@ -48,6 +48,11 @@ class CommentsTable extends Table
             'foreignKey' => 'userId'
         ]);
     }
+    /***** Custom Finder Methods *****/ 
+    public function findOwnedBy(Query $query, array $options) {
+        $id = $options['commentId'];
+        return $query->where(['id' => $id]);
+    }
 
     /**
      * Default validation rules.
