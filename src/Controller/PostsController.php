@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\ORM\Query;
 /**
  * Posts Controller
  *
@@ -46,6 +46,17 @@ class PostsController extends AppController
             $this->log($postss->toArray());
         */
 
+        /****** Passing Conditions to Contain ******/
+        /*
+            $options['contain'] = array('Users','Comments.Users');
+            $options['contain']['Users']['fields'] = array('Users.id'); // select fields return in linking table
+            $options['contain']['Comments'] = function (Query $query) {
+                return $query->where(['Comments.id > ' => 1]);
+            };
+            $postss = $this->Posts->find('all',$options)->enableHydration(false);
+            $this->log($postss->toArray());
+        */
+            
         $avatarCurrentUser = '/img/ehm-2.jpg';
         $title = 'Timeline';
         $this->set(compact('title','avatarCurrentUser','posts'));
