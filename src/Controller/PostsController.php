@@ -41,8 +41,9 @@ class PostsController extends AppController
         /****** Linking Tables Nested ******/
         /*
             $options['contain'] = array('Users','Comments' => 'Users');
-            $posts = $this->Posts->find('all',$options);
-            $this->log($posts->toArray());
+            $options['contain']['Users']['fields'] = array('Users.id'); // select fields return in linking table
+            $postss = $this->Posts->find('all',$options)->enableHydration(false);
+            $this->log($postss->toArray());
         */
 
         $avatarCurrentUser = '/img/ehm-2.jpg';
