@@ -30,13 +30,20 @@ class PostsController extends AppController
         $options = array();
         $options['contain'] = array('Users');
         $posts = $this->Posts->find('all',$options);
-            
+  
         $posts->formatResults(function (\Cake\Collection\CollectionInterface $results) {
             return $results->map(function ($row) {
                 $row['Comment'] = json_decode($this->requestAction('/comments/getAllComment/' . $row['id']));
                 return $row;
             });
         });
+
+        /****** Linking Tables Nested ******/
+        /*
+            $options['contain'] = array('Users','Comments' => 'Users');
+            $posts = $this->Posts->find('all',$options);
+            $this->log($posts->toArray());
+        */
 
         $avatarCurrentUser = '/img/ehm-2.jpg';
         $title = 'Timeline';
