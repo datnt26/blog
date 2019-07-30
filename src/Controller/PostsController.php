@@ -17,6 +17,7 @@ class PostsController extends AppController {
         /****** format result ******/
         $options = array();
         $options['contain'] = array('Users');
+        $options['order'] = array('Posts.created DESC');
         $posts = $this->Posts->find('all',$options);
   
         $posts->formatResults(function (\Cake\Collection\CollectionInterface $results) {

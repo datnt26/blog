@@ -13,6 +13,10 @@
   vertical-align: top;
   padding-left: 10px;
 }
+.post-user-avatar {
+  height: 35px;
+  width: 35px;
+}
 .panel-body {
   padding-bottom: 10px;
 }
@@ -30,6 +34,25 @@
   padding-left: 10px;
   width: 100%;
 }
+.comment-user-avatar {
+  height: 27px;
+  width: 27px;
+  margin-bottom: 2px;
+}
+.comment-typing {
+  width: 92%;
+  margin-top: 15px;
+}
 .sub-comment-item {
   margin-top : 5px;
+}
+.sub-comment-user-avatar {
+  height: 20px;
+  width: 20px;
+  margin-bottom: 4px;
+}
+.sub-comment-typing {
+  height:23px;
+  width: 92%;
+  margin-top: 10px;
 }
