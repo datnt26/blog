@@ -42,7 +42,7 @@
                               <div class="post-header">
                                  <div class="post-header-avatar">
                                     <a href="javascript:void(0)">
-                                       <?php echo $this->Html->image($post->user->avatar, array("alt" => "","height" => "35px","width" => "35px","class" => "media-object img-rounded"))?>
+                                       <?php echo $this->Html->image($post->user->avatar, array("alt" => "","class" => "media-object img-rounded post-user-avatar"))?>
                                     </a>
                                  </div>
                                  <div class="post-header-body">
@@ -96,7 +96,7 @@
                               <div class="comment">
                                  <div class="comment-avatar-user">
                                     <a href="javascript:void(0)">
-                                       <?php echo $this->Html->image($comment->user->avatar, array("alt" => "","height" => "27px","width" => "27px","class" => "media-object img-rounded"))?>
+                                       <?php echo $this->Html->image($comment->user->avatar, array("alt" => "","class" => "media-object img-rounded comment-user-avatar"))?>
                                     </a>
                                  </div>
                                  <div class = "comment-body" id = "<?php echo $comment->id?>">
@@ -117,7 +117,7 @@
                                                 <div class = "comment">
                                                    <div class = "comment-avatar-user">
                                                       <a href="javascript:void(0)">
-                                                         <?php echo $this->Html->image($comment->user->avatar, array("alt" => "","height" => "20px","width" => "20px","class" => "media-object img-rounded"))?>
+                                                         <?php echo $this->Html->image($comment->user->avatar, array("alt" => "","class" => "media-object img-rounded sub-comment-user-avatar"))?>
                                                       </a>
                                                    </div>
                                                    <div class="comment-body">
@@ -135,20 +135,14 @@
                                           <?php endforeach?>
                                        <?php endif?>
                                     </div>
-                                    <?php echo $this->Html->image($avatarCurrentUser, 
-                                                array("alt" => "","height" => "20px","width" => "20px",
-                                                      "style" => array("margin-bottom : 4px"),
-                                                      "class" => "img-rounded"))?>
-                                    <input class = "comment-typing sub-comment-typing" id = "<?php echo $post['Post']['id']?>" placeholder="Write a comment..."  style="height:23px;width: 92%;margin-top: 10px;">
+                                    <?php echo $this->Html->image($avatarCurrentUser, array("alt" => "","class" => "img-rounded sub-comment-user-avatar"))?>
+                                    <input class = "comment-typing sub-comment-typing" id = "<?php echo $post['Post']['id']?>" placeholder=" Write a comment...">
                                  </div>
                               </div> 
                            <?php endforeach?>
                         </div>
-                        <?php echo $this->Html->image($avatarCurrentUser, 
-                                                array("alt" => "","height" => "25px","width" => "25px",
-                                                      "style" => array("margin-bottom : 4px"),
-                                                      "class" => "img-rounded"))?>
-                        <input class = "comment-typing" id = "<?php echo $post['Post']['id']?>" placeholder="Write a comment..."  style="width: 92%;margin-top: 15px;">
+                        <?php echo $this->Html->image($avatarCurrentUser, array("alt" => "","class" => "img-rounded comment-user-avatar"))?>
+                        <input class = "comment-typing" id = "<?php echo $post['Post']['id']?>" placeholder=" Write a comment...">
                      </div>
                   </div>
                <?php endforeach;?>
