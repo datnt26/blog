@@ -8,7 +8,10 @@ $(document).ready(function() {
                 data: {
                     content : content
                 },
-                success: function (data) {
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', $('[name="_csrfToken"]').val());
+                },
+                success: function (data) 
                     // init new post
                     var post = $('<div>').attr({class: 'panel panel-default'}).prependTo($('#main'));
 
@@ -16,22 +19,22 @@ $(document).ready(function() {
                     var post_header = $('<div>').attr({class:'panel-heading'}).appendTo($(post));
                     var post_header_title = $('<h3 class="panel-title"><a href="javascript:void(0)"><div class="post-header"></div></a></h3>').appendTo($(post_header));
                     var post_header_avatar = $('<div>').attr({class:'post-header-avatar',}).appendTo($(post_header_title));
-                    $('<a href="javascript:void(0)"><img src="/blog'+ data.User.avatar +'" alt="" height="35px" width="35px" class="media-object img-rounded"></a>').appendTo($(post_header_avatar));
+                    $('<a href="javascript:void(0)"><img src="/blog'+ data.user.avatar +'" alt="" height="35px" width="35px" class="media-object img-rounded"></a>').appendTo($(post_header_avatar));
                     var post_header_body = $('<div>').attr({class:'post-header-body',}).appendTo($(post_header_title));
-                    $('<span> <a href="javascript:void(0)">' + data.User.username +'</a> </span><br> <small><span><time>22 minutes</time></span><span>ago</span></small>').appendTo($(post_header_body));
+                    $('<span> <a href="javascript:void(0)">' + data.user.username +'</a> </span><br> <small><span><time>22 minutes</time></span><span>ago</span></small>').appendTo($(post_header_body));
                     /* End part header of post*/ 
 
                     /* Part content of post*/
                     var post_content = $('<div>').attr({ class:'panel-body',}).appendTo($(post));
-                    $('<div><p class="text-post">' + data.Post.content + '</p></div>').appendTo($(post_content));
+                    $('<div><p class="text-post">' + data.content + '</p></div>').appendTo($(post_content));
                     $('<div style = "border-top:2px solid #EDEDED;padding-top:10px"> <div align = "center" class = "col-xs-4 col-sm-4 col-md-4"> <a href="javascript:void(0)"> <span data-toggle="tooltip" data-placement="bottom" title="Like"> <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like </span> </a> </div> <div align = "center" class = "col-xs-4 col-sm-4 col-md-4"> <a href="javascript:void(0)"> <span data-toggle="tooltip" data-placement="bottom" title="Comment"> <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Comment </span> </a> </div> <div align = "center" class = "col-xs-4 col-sm-4 col-md-4"> <a href="javascript:void(0)"> <span data-toggle="tooltip" data-placement="bottom" title="Share"> <span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share </span> </a> </div> </div>').appendTo($(post_content));
                     /* End part content of post*/                   
 
                     /* Part footer of post*/
                     var post_footer = $('<div>').attr({class:'panel-footer',}).appendTo($(post));
-                    var comment_list = $('<div>').attr({class:'comment-list',id: data.Post.id}).appendTo($(post_footer));
-                    $('<img src="/blog' + data.User.avatar + '" alt="" height="25px" width="25px" style="margin-bottom : 4px" class="img-rounded">').appendTo($(post_footer));
-                    $('<input class="comment-typing" id="' + data.Post.id + '" placeholder="Write a comment..." style="width: 92%;margin-top: 15px;">').appendTo($(post_footer));
+                    var comment_list = $('<div>').attr({class:'comment-list',id: data.id}).appendTo($(post_footer));
+                    $('<img src="/blog' + data.user.avatar + '" alt="" height="25px" width="25px" style="margin-bottom : 4px" class="img-rounded">').appendTo($(post_footer));
+                    $('<input class="comment-typing" id="' + data.id + '" placeholder="Write a comment..." style="width: 92%;margin-top: 15px;">').appendTo($(post_footer));
                     /* End part footer of post*/
 
                     //empty input after create post success

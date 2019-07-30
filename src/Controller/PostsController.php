@@ -1,22 +1,10 @@
 <?php
 namespace App\Controller;
-
 use App\Controller\AppController;
 use Cake\ORM\Query;
-/**
- * Posts Controller
- *
- * @property \App\Model\Table\PostsTable $Posts
- *
- * @method \App\Model\Entity\Post[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
-class PostsController extends AppController
-{
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null
-     */
+
+class PostsController extends AppController {
+
     public function index() { 
         /******  virtual fields  ******/
         /*
@@ -62,85 +50,24 @@ class PostsController extends AppController
         $this->set(compact('title','avatarCurrentUser','posts'));
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Post id.
-     * @return \Cake\Http\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $post = $this->Posts->get($id, [
-            'contain' => ['Users']
-        ]);
+    public function create() {
+        $this->autoRender = false;
+        $this->layout = false;
 
-        $this->set('post', $post);
-    }
-
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
         $post = $this->Posts->newEntity();
-        if ($this->request->is('post')) {
-            $post = $this->Posts->patchEntity($post, $this->request->getData());
+        if ($this->request->is('Ajax')) {
+            $data = $this->request->data;
+            $data['user_id'] = 2;
+            $post = $this->Posts->patchEntity($post,$data);
             if ($this->Posts->save($post)) {
-                $this->Flash->success(__('The post has been saved.'));
+                $options = array();
+                $options['contain'] = array('Users');
+                $newPost = $this->Posts->get($post->id,$options);
+                $this->response->body(json_encode($newPost));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->response;
             }
-            $this->Flash->error(__('The post could not be saved. Please, try again.'));
         }
-        $users = $this->Posts->Users->find('list', ['limit' => 200]);
-        $this->set(compact('post', 'users'));
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Post id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $post = $this->Posts->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $post = $this->Posts->patchEntity($post, $this->request->getData());
-            if ($this->Posts->save($post)) {
-                $this->Flash->success(__('The post has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The post could not be saved. Please, try again.'));
-        }
-        $users = $this->Posts->Users->find('list', ['limit' => 200]);
-        $this->set(compact('post', 'users'));
-    }
-
-    /**
-     * Delete method
-     *
-     * @param string|null $id Post id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $post = $this->Posts->get($id);
-        if ($this->Posts->delete($post)) {
-            $this->Flash->success(__('The post has been deleted.'));
-        } else {
-            $this->Flash->error(__('The post could not be deleted. Please, try again.'));
-        }
-
-        return $this->redirect(['action' => 'index']);
-    }
 }
