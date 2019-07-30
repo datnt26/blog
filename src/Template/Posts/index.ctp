@@ -25,6 +25,7 @@
          </div>
          <div class="col-xs-12 col-sm-8 col-md-6">
             <div class="input-group">
+               <input type="hidden" name="_csrfToken" value="<?= $this->request->getParam('_csrfToken'); ?>" />
                <input class="post-message form-control" type="text" name="content" placeholder="Make a post...">
                <span class="input-group-btn">
                  <button class="post btn btn-success" type="submit" name="post">Post</button>
