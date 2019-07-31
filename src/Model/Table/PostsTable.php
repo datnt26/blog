@@ -5,7 +5,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-
+use Cake\ORM\TableRegistry;
 /**
  * Posts Model
  *
@@ -37,6 +37,8 @@ class PostsTable extends Table
         $this->setTable('posts');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+        
+        //$this->log($list->toArray());
 
         $this->addBehavior('Timestamp');
 
@@ -48,6 +50,16 @@ class PostsTable extends Table
             'foreignKey' => 'postId',
             'joinType' => 'INNER'
         ]);
+    }
+    
+    /**
+    *  Use TableRegistry in Model
+    */
+    public function findAllComment() {
+        $Comment = TableRegistry::getTableLocator()->get('Comments');
+        $listComment = $Comment->find('all');
+
+        return $listComment;
     }
 
     /**

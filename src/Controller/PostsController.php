@@ -45,6 +45,12 @@ class PostsController extends AppController {
             $postss = $this->Posts->find('all',$options)->enableHydration(false);
             $this->log($postss->toArray());
         */
+
+        /***** Use TableRegistry in Model *****/
+        /*
+            $query = $this->Posts->find('allComment');
+            $this->log($query->toArray());
+        */
             
         $avatarCurrentUser = '/img/ehm-2.jpg';
         $title = 'Timeline';
