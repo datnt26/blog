@@ -9,14 +9,11 @@ class User extends Entity {
         'username' => true,
         'password' => true
     ];
-    // protected function _setPassword($password){
-    //     if (strlen($password)) {
-    //         $hasher = new DefaultPasswordHasher();
-    //         return $hasher->hash($password);
-    //     }
-    // }
-    // protected function _getPassword($password){
-    //     $hasher = new DefaultPasswordHasher();
-    //     return $hasher->hash($password);
-    // }
+    protected function _setPassword($value) {
+        if (strlen($value)) {
+            $hasher = new DefaultPasswordHasher();
+
+            return $hasher->hash($value);
+        }
+    }
 }
