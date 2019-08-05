@@ -30,6 +30,9 @@ class UsersController extends AppController {
             if ($this->Users->save($user)) {
                 return $this->redirect(['action' => 'login']);
             }
+            else {
+                $this->log($user->getErrors());
+            }
         }
     }
 
