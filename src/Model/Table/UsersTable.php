@@ -51,10 +51,9 @@ class UsersTable extends Table
     }
 
     /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * Hàm validationDefault được gọi khi entity được khởi tạo patchEntity()
+     * chuyển request data => entity object  
+     * Nếu trường nào ko thoả mãn điều kiện thì sẽ ko có trong entity object  
      */
     public function validationDefault(Validator $validator)
     {
@@ -67,7 +66,8 @@ class UsersTable extends Table
             ->maxLength('username', 255)
             ->requirePresence('username', 'create')
             ->notEmptyString('username')
-            ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
+            ;
 
         $validator
             ->scalar('avatar')
@@ -84,14 +84,9 @@ class UsersTable extends Table
     }
 
     /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
+    *  Hàm buildRules được gọi sau khi validationDefault thoả mãn và hàm save() hoặc delete() được gọi
+    */
+    public function buildRules(RulesChecker $rules) {
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->existsIn(['group_id'], 'Groups'));
 
