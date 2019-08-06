@@ -81,6 +81,18 @@ $(document).ready(function() {
                         /* Part footer of post*/
                         var post_footer = $('<div>').attr({class:'panel-footer',}).appendTo($(post));
                         var comment_list = $('<div>').attr({class:'comment-list',id: v.id}).appendTo($(post_footer));
+                        $.each(v.Comment, function(key,value) {
+                            var comment = $('<div>').attr({class:'comment'}).appendTo($(comment_list));
+                            var comment_avatar_user = $('<div>').attr({class:'comment-avatar-user'}).appendTo($(comment));
+                            $('<a href="javascript:void(0)"><img src="/blog'+ value.user.avatar +'" alt="" class="media-object img-rounded comment-user-avatar"></a>').appendTo($(comment_avatar_user));
+                            var comment_body = $('<div>').attr({class:'comment-body',id:value.id}).appendTo($(comment));
+                            var sub_comment = $('<div>').attr({class:'sub-comment',id:'parent-comment-' + value.id}).appendTo($(comment_body));
+                            var comment_body_content = $('<p>').attr({class: 'comment',style:'margin: 0;padding: 0;'}).appendTo($(sub_comment));
+                            $(comment_body_content).append('<span>'+'<a href="javascript:void(0">'+value.user.username+'</a>'+'</span> '+value.message);
+                            $(sub_comment).append('<p class="comment" style = "margin: 0;padding: 0;"><small><span><a href="javascript:void(0)">Like </a></span> <span> <a href="javascript:void(0)">Comment </a></span></small><small><span><time>2 min </time></span><span>ago</span></small></p>');
+                            $('<img>').attr({class:'img-rounded sub-comment-user-avatar',src:'/blog' + value.user.avatar}).appendTo($(comment_body));
+                            $('<input>').attr({class:'comment-typing sub-comment-typing',id:v.id,placeholder:'Write a comment...',style:'margin-left:3px;'}).appendTo($(comment_body));
+                        });
                         $('<img src="/blog' + v.user.avatar + '" alt="" class="img-rounded comment-user-avatar">').appendTo($(post_footer));
                         $('<input class="comment-typing" id="' + v.id + '" placeholder="Write a comment..." style="margin-left:3px;">').appendTo($(post_footer));
                         /* End part footer of post*/
