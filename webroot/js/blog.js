@@ -57,8 +57,6 @@ $(document).ready(function() {
                     xhr.setRequestHeader('X-CSRF-Token', $('[name="_csrfToken"]').val());
                 },
                 success: function (data) {
-                    console.log(data);
-                    
                     $.each(data, function(k,v) {
                         // init new post
                         var post = $('<div>').attr({class: 'panel panel-default'}).appendTo($('#main'));
@@ -81,16 +79,27 @@ $(document).ready(function() {
                         /* Part footer of post*/
                         var post_footer = $('<div>').attr({class:'panel-footer',}).appendTo($(post));
                         var comment_list = $('<div>').attr({class:'comment-list',id: v.id}).appendTo($(post_footer));
-                        $.each(v.Comment, function(key,value) {
-                            var comment = $('<div>').attr({class:'comment'}).appendTo($(comment_list));
-                            var comment_avatar_user = $('<div>').attr({class:'comment-avatar-user'}).appendTo($(comment));
-                            $('<a href="javascript:void(0)"><img src="/blog'+ value.user.avatar +'" alt="" class="media-object img-rounded comment-user-avatar"></a>').appendTo($(comment_avatar_user));
-                            var comment_body = $('<div>').attr({class:'comment-body',id:value.id}).appendTo($(comment));
-                            var sub_comment = $('<div>').attr({class:'sub-comment',id:'parent-comment-' + value.id}).appendTo($(comment_body));
+                        $.each(v.Comment, function(key,comment) {
+                            var commentDiv = $('<div>').attr({class:'comment'}).appendTo($(comment_list));
+                            var comment_avatar_user = $('<div>').attr({class:'comment-avatar-user'}).appendTo($(commentDiv));
+                            $('<a href="javascript:void(0)"><img src="/blog'+ comment.user.avatar +'" alt="" class="media-object img-rounded comment-user-avatar"></a>').appendTo($(comment_avatar_user));
+                            var comment_body = $('<div>').attr({class:'comment-body',id:comment.id}).appendTo($(commentDiv));
+                            var sub_comment = $('<div>').attr({class:'sub-comment',id:'parent-comment-' + comment.id}).appendTo($(comment_body));
                             var comment_body_content = $('<p>').attr({class: 'comment',style:'margin: 0;padding: 0;'}).appendTo($(sub_comment));
-                            $(comment_body_content).append('<span>'+'<a href="javascript:void(0">'+value.user.username+'</a>'+'</span> '+value.message);
+                            $(comment_body_content).append('<span>'+'<a href="javascript:void(0">'+comment.user.username+'</a>'+'</span> '+comment.message);
                             $(sub_comment).append('<p class="comment" style = "margin: 0;padding: 0;"><small><span><a href="javascript:void(0)">Like </a></span> <span> <a href="javascript:void(0)">Comment </a></span></small><small><span><time>2 min </time></span><span>ago</span></small></p>');
-                            $('<img>').attr({class:'img-rounded sub-comment-user-avatar',src:'/blog' + value.user.avatar}).appendTo($(comment_body));
+                            $.each(comment.children, function(key,subComment) {
+                                var sub_comment_item = $('<div>').attr({class: 'sub-comment-item'}).appendTo($('.sub-comment#parent-comment-' + subComment.parent_id));
+                                var comment = $('<div>').attr({class: 'comment'}).appendTo($(sub_comment_item));
+                                var comment_avatar_user = $('<div>').attr({class: 'comment-avatar-user'}).appendTo($(comment));
+                                var link_comment_avatar_user = $('<a>').attr({href:'javascript:void(0)'}).appendTo($(comment_avatar_user))
+                                $('<img>').attr({class:'media-object img-rounded sub-comment-user-avatar',src:'/blog' + subComment.user.avatar}).appendTo($(link_comment_avatar_user));
+                                var comment_body = $('<div>').attr({class: 'comment-body'}).appendTo($(comment));
+                                var comment_body_content = $('<p>').attr({class: 'comment',style:'margin: 0;padding: 0;'}).appendTo($(comment_body));
+                                $(comment_body_content).append('<span>'+'<a href="javascript:void(0">'+subComment.user.username+'</a>'+'</span> '+subComment.message);
+                                $(comment_body).append('<div><small><span><a href="javascript:void(0)">Like </a></span> <span> <a href="javascript:void(0)">Comment </a></span></small><small><span><time>2 min </time></span><span>ago</span></small></div>');
+                            });
+                            $('<img>').attr({class:'img-rounded sub-comment-user-avatar',src:'/blog' + comment.user.avatar}).appendTo($(comment_body));
                             $('<input>').attr({class:'comment-typing sub-comment-typing',id:v.id,placeholder:'Write a comment...',style:'margin-left:3px;'}).appendTo($(comment_body));
                         });
                         $('<img src="/blog' + v.user.avatar + '" alt="" class="img-rounded comment-user-avatar">').appendTo($(post_footer));
