@@ -33,10 +33,9 @@ class Post extends Entity
         'user' => true
     ];
      /* virtual fields */
-    protected $_virtual = ['full_name'];
+    protected $_virtual = ['avatar_of_curent_user'];
     
-    protected function _getFullName() {
-        
-        return $this->id . '  ' . $this->content;
+    protected function _getAvatarOfCurentUser() {
+        return $this->Auth->user('avatar');
     }
 }

@@ -86,13 +86,6 @@ class PostsController extends AppController {
         if ($this->request->is('Ajax')) {
             $data = $this->request->data;
             $currentPage = $data['currentPage'];
-            // $param = array(
-            //             'limit' => 5,
-            //             'offset' => $currentPage * 5,
-            //             'order' => array('Post.created DESC')
-            //         );      
-            // $posts = $this->Post->find("all",$param);
-            // return json_encode($posts);
             $options = array();
             $options['contain'] = array('Users');
             $options['order'] = array('Posts.created DESC');
@@ -106,6 +99,7 @@ class PostsController extends AppController {
                     return $row;
                 });
             });
+            $this->log($posts->toArray());
             $this->response->body(json_encode($posts));
 
             return $this->response;
