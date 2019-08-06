@@ -52,7 +52,7 @@ class PostsController extends AppController {
             $this->log($query->toArray());
         */
             
-        $avatarCurrentUser = '/img/ehm-2.jpg';
+        $avatarCurrentUser = $this->Auth->user('avatar');
         $title = 'Timeline';
         $this->set(compact('title','avatarCurrentUser','posts'));
     }

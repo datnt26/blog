@@ -93,7 +93,7 @@ class CommentsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['parent_id'], 'ParentComments'));
+        //$rules->add($rules->existsIn(['parent_id'], 'ParentComments'));
 
         return $rules;
     }
