@@ -18,8 +18,9 @@ class PostsController extends AppController {
         $options = array();
         $options['contain'] = array('Users');
         $options['order'] = array('Posts.created DESC');
+        $options['limit'] = 5;
         $posts = $this->Posts->find('all',$options);
-  
+        // format posts
         $posts->formatResults(function (\Cake\Collection\CollectionInterface $results) {
             return $results->map(function ($row) {
                 $row['Comment'] = json_decode($this->requestAction('/comments/getAllComment/' . $row['id']));
@@ -64,7 +65,7 @@ class PostsController extends AppController {
         $post = $this->Posts->newEntity();
         if ($this->request->is('Ajax')) {
             $data = $this->request->data;
-            $data['user_id'] = 2;
+            $data['user_id'] = $this->Auth->user('id');
             $post = $this->Posts->patchEntity($post,$data);
             if ($this->Posts->save($post)) {
                 $options = array();
@@ -74,6 +75,40 @@ class PostsController extends AppController {
 
                 return $this->response;
             }
+        }
+    }
+
+    // get next 5 posts 
+    public function loadMore() {
+        $this->layout = false;
+        $this->autoRender = false;  
+
+        if ($this->request->is('Ajax')) {
+            $data = $this->request->data;
+            $currentPage = $data['currentPage'];
+            // $param = array(
+            //             'limit' => 5,
+            //             'offset' => $currentPage * 5,
+            //             'order' => array('Post.created DESC')
+            //         );      
+            // $posts = $this->Post->find("all",$param);
+            // return json_encode($posts);
+            $options = array();
+            $options['contain'] = array('Users');
+            $options['order'] = array('Posts.created DESC');
+            $options['limit'] = 5;
+            $options['offset'] = $currentPage * 5;
+            $posts = $this->Posts->find('all',$options);
+            // format posts
+            $posts->formatResults(function (\Cake\Collection\CollectionInterface $results) {
+                return $results->map(function ($row) {
+                    $row['Comment'] = json_decode($this->requestAction('/comments/getAllComment/' . $row['id']));
+                    return $row;
+                });
+            });
+            $this->response->body(json_encode($posts));
+
+            return $this->response;
         }
     }
 
