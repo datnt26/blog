@@ -136,18 +136,18 @@
                                        <?php endif?>
                                     </div>
                                     <?php echo $this->Html->image($avatarCurrentUser, array("alt" => "","class" => "img-rounded sub-comment-user-avatar"))?>
-                                    <input class = "comment-typing sub-comment-typing" id = "<?php echo $post['Post']['id']?>" placeholder=" Write a comment...">
+                                    <input class = "comment-typing sub-comment-typing" id = "<?php echo $post->id?>" placeholder=" Write a comment...">
                                  </div>
                               </div> 
                            <?php endforeach?>
                         </div>
                         <?php echo $this->Html->image($avatarCurrentUser, array("alt" => "","class" => "img-rounded comment-user-avatar"))?>
-                        <input class = "comment-typing" id = "<?php echo $post['Post']['id']?>" placeholder=" Write a comment...">
+                        <input class = "comment-typing" id = "<?php echo $post->id?>" placeholder=" Write a comment...">
                      </div>
                   </div>
                <?php endforeach;?>
             </div>
-            <button  data-toggle="tooltip" data-placement="bottom" title="Load More" class = "btn btn-success load-more" type="button" style="width:100%;">
+            <button  data-toggle="tooltip" data-placement="bottom" title="Load More" class = "btn btn-success load-more" type="button" style="margin-bottom:15px;width:100%;">
                   LOAD MORE 
                </button>
          </div>
