@@ -22,10 +22,9 @@ class UsersTableTest extends TestCase
      *
      * @var array
      */
+    // cd blog || vendor/bin/phpunit tests/TestCase/Model/Table/UsersTableTest
     public $fixtures = [
-        'app.Users',
-        'app.Groups',
-        'app.Posts'
+        'app.Users'
     ];
 
     /**
