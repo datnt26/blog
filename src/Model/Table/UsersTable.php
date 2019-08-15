@@ -66,8 +66,7 @@ class UsersTable extends Table
             ->maxLength('username', 255)
             ->requirePresence('username', 'create')
             ->notEmptyString('username')
-            ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
-            ;
+            ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table','message' => 'This user is already in use !!!']);
 
         $validator
             ->scalar('avatar')
