@@ -32,7 +32,7 @@ class PostsController extends AppController {
         /*
             $options['contain'] = array('Users','Comments' => 'Users');
             $options['contain']['Users']['fields'] = array('Users.id'); // select fields return in linking table
-            $postss = $this->Posts->find('all',$options)->enableHydration(false);
+            $postss = $this->Posts->find('all',$options)->enableHydration(false);// By default queries and result sets will return Entities objects. You can retrieve basic arrays by disabling hydration
             $this->log($postss->toArray());
         */
 
