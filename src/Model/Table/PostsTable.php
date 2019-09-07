@@ -48,7 +48,10 @@ class PostsTable extends Table
         ]);
         $this->hasMany('Comments', [
             'foreignKey' => 'postId',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
+            /* delete post and all comment of post */
+            'dependent' => true,
+            'cascadeCallbacks' => true,
         ]);
     }
     

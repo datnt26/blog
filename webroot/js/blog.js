@@ -1,4 +1,60 @@
 $(document).ready(function() {
+    $(".delete-post-button").click(function(){
+        var postId = $('.delete-post-button').val();
+        $.ajax({
+                method: "POST",
+                url: '/blog/posts/delete',
+                dataType: 'json',
+                data: {
+                    postId : postId
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', $('[name="_csrfToken"]').val());
+                },
+                success: function (data) {
+                    $('#main').empty();
+                    $.each(data, function(k,v) {
+                        // init new post
+                        var post = $('<div>').attr({class: 'panel panel-default'}).appendTo($('#main'));
+
+                        /* Part header of post*/
+                        var post_header = $('<div>').attr({class:'panel-heading'}).appendTo($(post));
+                        var post_header_title = $('<h3 class="panel-title"><a href="javascript:void(0)"><div class="post-header"></div></a></h3>').appendTo($(post_header));
+                        var post_header_avatar = $('<div>').attr({class:'post-header-avatar',}).appendTo($(post_header_title));
+                        $('<a href="javascript:void(0)"><img src="/blog'+ v.user.avatar +'" alt="" class="media-object img-rounded post-user-avatar"></a>').appendTo($(post_header_avatar));
+                        var post_header_body = $('<div>').attr({class:'post-header-body',}).appendTo($(post_header_title));
+                        $('<span> <a href="javascript:void(0)">' + v.user.username +'</a> </span><br> <small><span><time>22 minutes</time></span><span>ago</span></small>').appendTo($(post_header_body));
+                        /* End part header of post*/ 
+
+                        /* Part content of post*/
+                        var post_content = $('<div>').attr({ class:'panel-body',}).appendTo($(post));
+                        $('<div><p class="text-post">' + v.content + '</p></div>').appendTo($(post_content));
+                        $('<div style = "border-top:2px solid #EDEDED;padding-top:10px"><div align = "center" class = "col-xs-4 col-sm-4 col-md-4"> <a href="javascript:void(0)"> <span data-toggle="tooltip" data-placement="bottom" title="Like"> <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like </span> </a></div><div align = "center" class = "col-xs-4 col-sm-4 col-md-4"><a href="javascript:void(0)"><span data-toggle="tooltip" data-placement="bottom" title="Comment"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Comment </span></a></div><div align = "center" class = "col-xs-4 col-sm-4 col-md-4"><a href="javascript:void(0)"><span data-toggle="tooltip" data-placement="bottom" title="Share"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share </span></a></div></div>').appendTo($(post_content));
+                        /* End part content of post*/                   
+
+                        /* Part footer of post*/
+                        var post_footer = $('<div>').attr({class:'panel-footer',}).appendTo($(post));
+                        var comment_list = $('<div>').attr({class:'comment-list',id: v.id}).appendTo($(post_footer));
+                        $.each(v.comments, function(key,comment) {
+                            var commentDiv = $('<div>').attr({class:'comment'}).appendTo($(comment_list));
+                            var comment_avatar_user = $('<div>').attr({class:'comment-avatar-user'}).appendTo($(commentDiv));
+                            $('<a href="javascript:void(0)"><img src="/blog'+ comment.user.avatar +'" alt="" class="media-object img-rounded comment-user-avatar"></a>').appendTo($(comment_avatar_user));
+                            var comment_body = $('<div>').attr({class:'comment-body',id:comment.id}).appendTo($(commentDiv));
+                            var sub_comment = $('<div>').attr({class:'sub-comment',id:'parent-comment-' + comment.id}).appendTo($(comment_body));
+                            var comment_body_content = $('<p>').attr({class: 'comment',style:'margin: 0;padding: 0;'}).appendTo($(sub_comment));
+                            $(comment_body_content).append('<span>'+'<a href="javascript:void(0">'+comment.user.username+'</a>'+'</span> '+comment.message);
+                            $(sub_comment).append('<p class="comment" style = "margin: 0;padding: 0;"><small><span><a href="javascript:void(0)">Like </a></span> <span> <a href="javascript:void(0)">Comment </a></span></small><small><span><time>2 min </time></span><span>ago</span></small></p>');
+                            $('<img>').attr({class:'img-rounded sub-comment-user-avatar',src:'/blog' + comment.user.avatar}).appendTo($(comment_body));
+                            $('<input>').attr({class:'comment-typing sub-comment-typing',id:v.id,placeholder:'Write a comment...',style:'margin-left:3px;'}).appendTo($(comment_body));
+                        });
+                        $('<img src="/blog' + v.user.avatar + '" alt="" class="img-rounded comment-user-avatar">').appendTo($(post_footer));
+                        $('<input class="comment-typing" id="' + v.id + '" placeholder="Write a comment..." style="margin-left:3px;">').appendTo($(post_footer));
+                        /* End part footer of post*/
+                    });
+                }
+        });
+        $('#confirmDeletePostModal').modal('hide');
+    });
     $(".post").click(function(){
         var content = $('.post-message').val();
         $.ajax({
@@ -166,5 +222,9 @@ function createComment($this) {
     });
 }
 
+$(document).on("click", ".post-action-delete", function () {
+    var eventId = $(this).data('id');
+    $('.delete-post-button').val( eventId );
+});
 
 
