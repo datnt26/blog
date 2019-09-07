@@ -106,4 +106,27 @@ class PostsController extends AppController {
         }
     }
 
+    public function delete() {
+        $this->layout = false;
+        $this->autoRender = false;  
+
+        $this->log($this->request->data);
+
+        if ($this->request->is('Ajax')) {
+            $data = $this->request->data;
+            $post = $this->Posts->get($data['postId']);
+            // delete post and all comment of post
+            if ($this->Posts->delete($post)) {
+                $options = array();
+                $options['contain'] = array('Users','Comments' => 'Users');
+                $options['order'] = array('Posts.created DESC');
+                $options['limit'] = 5;
+                $posts = $this->Posts->find('all',$options);
+                $this->response->body(json_encode($posts));
+
+                return $this->response;
+            }
+        }
+    }
+
 }

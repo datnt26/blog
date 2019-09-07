@@ -46,16 +46,28 @@
                                     </a>
                                  </div>
                                  <div class="post-header-body">
-                                       <span>
-                                          <a href="javascript:void(0)">
-                                             <?php echo $post->user->username;?>
-                                          </a>
-                                       </span><br>
+                                    <span>
+                                       <a href="javascript:void(0)">
+                                          <?php echo $post->user->username;?>
+                                       </a>
+                                    </span><br>
                                     <small><span><time>22 minutes</time></span><span>ago</span></small>
+                                 </div>
+                                 <div class="dropdown pull-right">
+                                    <p class = "post-action" data-toggle="dropdown">...</p>
+                                    <ul class="dropdown-menu">
+                                       <li class = "post-action-delete" data-id = <?php echo $post->id?> >
+                                          <a href="#confirmDeletePostModal" data-toggle="modal">Xóa</a></li>
+                                       <li class = "post-action-edit" data-id = <?php echo $post->id?> >
+                                          <a href="#">Chỉnh Sửa</a>
+                                       </li>
+                                    </ul>
                                  </div>
                               </div>
                            </a>
+                           
                         </h3>
+                        
                      </div>
                      <!-- post body -->
                      <div class="panel-body">
@@ -158,3 +170,4 @@
       </div>
    </div>
 </div>
+<?php  echo $this->element('/Modal/confirm-delete-post-modal')?>  

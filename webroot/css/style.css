@@ -1,3 +1,25 @@
+/*
+  config css post-action class
+
+*/
+.post-action {
+  font-size: 25px;
+  margin-top: -50px;
+  cursor: pointer
+}
+
+ul.dropdown-menu {
+   margin-right: -17px;
+   margin-top: -25px;
+   padding: 0px;
+}
+.post-action-delete {
+  text-align: center;
+}
+.post-action-edit {
+  text-align: center;
+}
+
 .center {
   margin: auto;
   width: 60%;
@@ -55,4 +77,62 @@
   height:23px;
   width: 92%;
   margin-top: 10px;
+}
+/*
+  config css modal
+
+*/
+div.modal-confirm {     
+  color: #636363;
+  width: 400px;
+}
+.modal-confirm .modal-content {
+  padding: 20px;
+  border-radius: 5px;
+  border: none;
+    text-align: center;
+  font-size: 14px;
+}
+.modal-confirm .modal-header {
+  border-bottom: none;   
+  position: relative;
+  padding: 0px;
+}
+.modal-confirm h4 {
+  text-align: center;
+  font-size: 25px;
+  margin-top: 10px;
+}
+.modal-confirm .close {
+  position: absolute;
+  top: -5px;
+  right: -2px;
+}
+
+.modal-confirm .modal-footer {
+  border: none;
+  text-align: center;     
+  border-radius: 5px;
+  font-size: 13px;
+  padding: 0px;
+}  
+.modal-confirm .btn {
+  color: #fff;
+  border-radius: 4px;
+  background: #60c7c1;
+  text-decoration: none;
+  transition: all 0.4s;
+  line-height: normal;
+  min-width: 120px;
+  border: none;
+  min-height: 40px;
+  border-radius: 3px;
+  margin: 0 5px;
+  outline: none !important;
+}
+.modal-confirm .btn-info {
+  background: #c1c1c1;
+}
+.modal-confirm .btn-danger {
+  background: #f15e5e;
 }
