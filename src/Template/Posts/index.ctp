@@ -103,8 +103,7 @@
                      <!-- post footer -->
                      <div class="panel-footer">
                         <div class = "comment-list" id = "<?php echo $post->id?>">
-                           <?php $listComment = $post->Comment;?>
-                           <?php foreach($listComment as $comment) : ?>
+                           <?php foreach($post->comments as $comment) : ?>
                               <div class="comment">
                                  <div class="comment-avatar-user">
                                     <a href="javascript:void(0)">
@@ -123,13 +122,13 @@
                                           </small> 
                                           <small><span><time>22 min </time></span><span>ago</span></small>
                                        </p>
-                                       <?php if($comment->children) : ?>
-                                          <?php foreach($comment->children as $subComment) : ?>
+                                       <?php if($comment->children_comments) : ?>
+                                          <?php foreach($comment->children_comments as $subComment) : ?>
                                              <div class = "sub-comment-item">
                                                 <div class = "comment">
                                                    <div class = "comment-avatar-user">
                                                       <a href="javascript:void(0)">
-                                                         <?php echo $this->Html->image($comment->user->avatar, array("alt" => "","class" => "media-object img-rounded sub-comment-user-avatar"))?>
+                                                         <?php echo $this->Html->image($subComment->user->avatar, array("alt" => "","class" => "media-object img-rounded sub-comment-user-avatar"))?>
                                                       </a>
                                                    </div>
                                                    <div class="comment-body">

@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 
 /**
  * Comment Entity
@@ -37,7 +38,12 @@ class Comment extends Entity
         'child_comments' => true
     ];
 
-    protected function _getLabel() {
-        return $this->_properties['id'] . ' - ' . $this->_properties['message'];
+    protected $_virtual = ['children_comments'];
+
+    protected function _getChildrenComments() {
+        $options['contain'] = array('Users');
+        $options['conditions'] = array('parent_id' => $this->_properties['id']);
+        $query = TableRegistry::get('Comments')->find('all',$options);
+        return $query->toArray();
     }
 }

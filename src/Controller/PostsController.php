@@ -16,17 +16,18 @@ class PostsController extends AppController {
 
         /****** format result ******/
         $options = array();
-        $options['contain'] = array('Users');
+        $options['contain'] = array('Users','Comments' => 'Users');
         $options['order'] = array('Posts.created DESC');
         $options['limit'] = 5;
-        $posts = $this->Posts->find('all',$options);
+        $posts = $this->Posts->find('all',$options)->toArray();
+
         // format posts
-        $posts->formatResults(function (\Cake\Collection\CollectionInterface $results) {
-            return $results->map(function ($row) {
-                $row['Comment'] = json_decode($this->requestAction('/comments/getAllComment/' . $row['id']));
-                return $row;
-            });
-        });
+        // $posts->formatResults(function (\Cake\Collection\CollectionInterface $results) {
+        //     return $results->map(function ($row) {
+        //         $row['Comment'] = json_decode($this->requestAction('/comments/getAllComment/' . $row['id']));
+        //         return $row;
+        //     });
+        // });
 
         /****** Linking Tables Nested ******/
         /*
@@ -109,8 +110,6 @@ class PostsController extends AppController {
     public function delete() {
         $this->layout = false;
         $this->autoRender = false;  
-
-        $this->log($this->request->data);
 
         if ($this->request->is('Ajax')) {
             $data = $this->request->data;
