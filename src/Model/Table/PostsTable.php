@@ -52,6 +52,7 @@ class PostsTable extends Table
             /* delete post and all comment of post */
             'dependent' => true,
             'cascadeCallbacks' => true,
+            'conditions' => array('Comments.parent_id IS' => NULL)
         ]);
     }
     
