@@ -1,4 +1,9 @@
-$(document).ready(function() {
+$(document).ready(function() {  
+    $(".post-action-edit").click(function(){        
+        var textarea = $('#edit-post-' + $(this).attr('id')).find('textarea');
+        textarea.height(textarea[0].scrollHeight + 55);
+        $('#edit-post-' + $(this).attr('id')).show();
+    });
     $(".delete-post-button").click(function(){
         var postId = $('.delete-post-button').val();
         $.ajax({
@@ -238,5 +243,10 @@ $(document).on("click", ".post-action-delete", function () {
     var eventId = $(this).data('id');
     $('.delete-post-button').val( eventId );
 });
+
+function autosize(textarea) {
+    $(textarea).height(1); // temporarily shrink textarea so that scrollHeight returns content height when content does not fill textarea
+    $(textarea).height($(textarea).prop("scrollHeight"));
+}
 
 
