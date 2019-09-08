@@ -58,8 +58,8 @@
                                     <ul class="dropdown-menu">
                                        <li class = "post-action-delete" data-id = <?php echo $post->id?> >
                                           <a href="#confirmDeletePostModal" data-toggle="modal">Xóa</a></li>
-                                       <li class = "post-action-edit" data-id = <?php echo $post->id?> >
-                                          <a href="#">Chỉnh Sửa</a>
+                                       <li class = "post-action-edit" id = "<?php echo $post->id?>" >
+                                          <a href="javascript:void(0)">Chỉnh Sửa</a>
                                        </li>
                                     </ul>
                                  </div>
@@ -75,6 +75,13 @@
                            <p class="text-post">
                               <?php echo $post->content;?>
                            </p>
+                           <div class = "edit-post" id = "<?php echo 'edit-post-'.$post->id?>" style = "display:none;border:1px solid #CCCCCC;">
+                              <textarea class = "edit-post-preview"><?php echo $post->content;?></textarea>
+                              <div class = "edit-post-action" style = "background-color:#EEEEEE;height: 45px;padding:5px;padding-top:7px;">
+                                 <button class = "btn btn-danger pull-right " >Lưu Lại</button>
+                                 <button class = "btn btn-info pull-right" style = "margin-right:5px">Hủy Bỏ</button>
+                              </div>
+                           </div>
                         </div>
                         <div style = "border-top:2px solid #EDEDED;padding-top:10px">  
                            <div align = "center" class = "col-xs-4 col-sm-4 col-md-4">
@@ -170,3 +177,18 @@
    </div>
 </div>
 <?php  echo $this->element('/Modal/confirm-delete-post-modal')?>  
+<style type="text/css">
+textarea {
+  resize: none;
+  width: 100%;
+  text-indent: 5px;
+  overflow:hidden;
+  height: auto;
+  border: none;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+</style>
