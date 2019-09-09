@@ -128,4 +128,20 @@ class PostsController extends AppController {
         }
     }
 
+    public function saveEditPost() {
+        $this->layout = false;
+        $this->autoRender = false;  
+
+        if ($this->request->is('Ajax')) {
+            $data = $this->request->data;
+            $post = $this->Posts->get($data['postId']);
+            $post->content = $data['content'];
+            if ($this->Posts->save($post)) {
+                $this->response->body(json_encode(array('content' => $data['content'])));
+
+                return $this->response;
+            }
+        }
+    }
+
 }

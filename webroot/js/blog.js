@@ -1,7 +1,8 @@
 $(document).ready(function() {  
     $(".post-action-edit").click(function(){        
         var textarea = $('#edit-post-' + $(this).attr('id')).find('textarea');
-        textarea.height(textarea[0].scrollHeight + 55);
+        textarea.height($('#text-post-' + $(this).attr('id')).height());
+        $('#text-post-' + $(this).attr('id')).hide();
         $('#edit-post-' + $(this).attr('id')).show();
     });
     $(".delete-post-button").click(function(){
@@ -244,9 +245,30 @@ $(document).on("click", ".post-action-delete", function () {
     $('.delete-post-button').val( eventId );
 });
 
-function autosize(textarea) {
-    $(textarea).height(1); // temporarily shrink textarea so that scrollHeight returns content height when content does not fill textarea
-    $(textarea).height($(textarea).prop("scrollHeight"));
+function saveEditPost(postId) {
+    var content = $('#edit-post-' + postId).find('textarea').val();
+    $.ajax({
+            method: "POST",
+            url: '/blog/posts/saveEditPost',
+            dataType: 'json',
+            data: {
+                postId : postId,
+                content : content
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', $('[name="_csrfToken"]').val());
+            },
+            success: function (data) {
+                $('#text-post-' + postId).text(data.content);
+                $('#edit-post-' + postId).hide();
+                $('#text-post-' + postId).show();
+            }
+    });
+}
+
+function cancelEditPost(postId) {
+    $('#edit-post-' + postId).hide();
+    $('#text-post-' + postId).show();
 }
 
 

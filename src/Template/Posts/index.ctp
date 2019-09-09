@@ -72,14 +72,14 @@
                      <!-- post body -->
                      <div class="panel-body">
                         <div>
-                           <p class="text-post">
+                           <p class="text-post" id = "<?php echo 'text-post-'.$post->id?>">
                               <?php echo $post->content;?>
                            </p>
                            <div class = "edit-post" id = "<?php echo 'edit-post-'.$post->id?>" style = "display:none;border:1px solid #CCCCCC;">
                               <textarea class = "edit-post-preview"><?php echo $post->content;?></textarea>
                               <div class = "edit-post-action" style = "background-color:#EEEEEE;height: 45px;padding:5px;padding-top:7px;">
-                                 <button class = "btn btn-danger pull-right " >Lưu Lại</button>
-                                 <button class = "btn btn-info pull-right" style = "margin-right:5px">Hủy Bỏ</button>
+                                 <button class = "btn btn-danger pull-right" onclick="saveEditPost('<?php echo $post->id?>')">Lưu Lại</button>
+                                 <button class = "btn btn-info pull-right" style = "margin-right:5px"  onclick="cancelEditPost('<?php echo $post->id?>')">Hủy Bỏ</button>
                               </div>
                            </div>
                         </div>
