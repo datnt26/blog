@@ -20,6 +20,7 @@ class PostsController extends AppController {
         $options['order'] = array('Posts.created DESC');
         $options['limit'] = 5;
         $posts = $this->Posts->find('all',$options)->toArray();
+        //$this->log($posts);
 
         // format posts
         // $posts->formatResults(function (\Cake\Collection\CollectionInterface $results) {
