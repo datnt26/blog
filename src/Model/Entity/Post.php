@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 
 /**
  * Post Entity
@@ -35,7 +36,16 @@ class Post extends Entity
      /* virtual fields */
     // protected $_virtual = ['avatar_of_curent_user'];
     
-    // protected function _getAvatarOfCurentUser() {
+    // protected function _getAvatar() {
     //     return $this->Auth->user('avatar');
     // }
+
+    protected $_virtual = ['current_user_is_like_post'];
+    
+    protected function _getCurrentUserIsLikePost() {
+        $like = TableRegistry::get('Likes');
+        $exists = $like->exists(['userId' => 1, 'postId' => $this->_properties['id']]);
+        return ($exists) ? true : false;
+    }
+
 }

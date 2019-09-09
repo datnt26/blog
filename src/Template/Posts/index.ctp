@@ -72,23 +72,29 @@
                      <!-- post body -->
                      <div class="panel-body">
                         <div>
-                           <p class="text-post">
+                           <p class="text-post" id = "<?php echo 'text-post-'.$post->id?>">
                               <?php echo $post->content;?>
                            </p>
                            <div class = "edit-post" id = "<?php echo 'edit-post-'.$post->id?>" style = "display:none;border:1px solid #CCCCCC;">
                               <textarea class = "edit-post-preview"><?php echo $post->content;?></textarea>
                               <div class = "edit-post-action" style = "background-color:#EEEEEE;height: 45px;padding:5px;padding-top:7px;">
-                                 <button class = "btn btn-danger pull-right " >Lưu Lại</button>
-                                 <button class = "btn btn-info pull-right" style = "margin-right:5px">Hủy Bỏ</button>
+                                 <button class = "btn btn-danger pull-right" onclick="saveEditPost('<?php echo $post->id?>')">Lưu Lại</button>
+                                 <button class = "btn btn-info pull-right" style = "margin-right:5px"  onclick="cancelEditPost('<?php echo $post->id?>')">Hủy Bỏ</button>
                               </div>
                            </div>
                         </div>
                         <div style = "border-top:2px solid #EDEDED;padding-top:10px">  
                            <div align = "center" class = "col-xs-4 col-sm-4 col-md-4">
                               <a href="javascript:void(0)">
+                                 <?php if($post->current_user_is_like_post) :?>
                                  <span  data-toggle="tooltip" data-placement="bottom" title="Like">
-                                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>  Like
+                                    <i class="fa fa-thumbs-up" style = "color:blue;font-size:20px"></i> Like
                                  </span>
+                                 <?php else:?>
+                                 <span  data-toggle="tooltip" data-placement="bottom" title="Like">
+                                    <i style="font-size:20px" class="fa">&#xf087;</i> Like
+                                 </span>
+                              <?php endif?>
                               </a>
                            </div>
                            <div align = "center" class = "col-xs-4 col-sm-4 col-md-4">

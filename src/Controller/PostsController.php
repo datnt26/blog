@@ -20,6 +20,7 @@ class PostsController extends AppController {
         $options['order'] = array('Posts.created DESC');
         $options['limit'] = 5;
         $posts = $this->Posts->find('all',$options)->toArray();
+        //$this->log($posts);
 
         // format posts
         // $posts->formatResults(function (\Cake\Collection\CollectionInterface $results) {
@@ -122,6 +123,22 @@ class PostsController extends AppController {
                 $options['limit'] = 5;
                 $posts = $this->Posts->find('all',$options);
                 $this->response->body(json_encode($posts));
+
+                return $this->response;
+            }
+        }
+    }
+
+    public function saveEditPost() {
+        $this->layout = false;
+        $this->autoRender = false;  
+
+        if ($this->request->is('Ajax')) {
+            $data = $this->request->data;
+            $post = $this->Posts->get($data['postId']);
+            $post->content = $data['content'];
+            if ($this->Posts->save($post)) {
+                $this->response->body(json_encode(array('content' => $data['content'])));
 
                 return $this->response;
             }
