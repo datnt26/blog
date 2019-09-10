@@ -85,16 +85,16 @@
                         </div>
                         <div style = "border-top:2px solid #EDEDED;padding-top:10px">  
                            <div align = "center" class = "col-xs-4 col-sm-4 col-md-4">
-                              <a href="javascript:void(0)">
+                              <a href="javascript:void(0)" style = "text-decoration:none" onclick="likePost(this,'<?php echo $post->id?>')">
                                  <?php if($post->current_user_is_like_post) :?>
-                                 <span  data-toggle="tooltip" data-placement="bottom" title="Like">
-                                    <i class="fa fa-thumbs-up" style = "color:blue;font-size:20px"></i> Like
-                                 </span>
+                                    <span  data-toggle="tooltip" data-placement="bottom" title="Like">
+                                       <i class="fa fa-thumbs-up" style = "color:blue;font-size:19px"></i> Like
+                                    </span>
                                  <?php else:?>
-                                 <span  data-toggle="tooltip" data-placement="bottom" title="Like">
-                                    <i style="font-size:20px" class="fa">&#xf087;</i> Like
-                                 </span>
-                              <?php endif?>
+                                    <span  data-toggle="tooltip" data-placement="bottom" title="Like">
+                                       <i style="font-size:19px" class="fa">&#xf087;</i> Like
+                                    </span>
+                                 <?php endif?>
                               </a>
                            </div>
                            <div align = "center" class = "col-xs-4 col-sm-4 col-md-4">

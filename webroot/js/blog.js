@@ -271,4 +271,29 @@ function cancelEditPost(postId) {
     $('#text-post-' + postId).show();
 }
 
+function likePost(elem,postId) {
+    $.ajax({
+            method: "POST",
+            url: '/blog/posts/likePost',
+            dataType: 'json',
+            data: {
+                postId : postId
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', $('[name="_csrfToken"]').val());
+            },
+            success: function (data) {
+                $(elem).empty();
+                var span = $('<span>').attr({'data-toggle':'tooltip','data-placement':'bottom','title':'Like'}).appendTo($(elem));
+                if (!data.isLike) {                    
+                    $('<i>').attr({class:'fa','style':'font-size:19px'}).html('&#xf087;').appendTo(span);
+                    $(elem).append(' Like');
+                    return;
+                }
+                $('<i>').attr({class:'fa fa-thumbs-up','style':'color:blue;font-size:19px'}).appendTo(span);
+                $(elem).append(' Like');
+            }
+    });
+}
+
 
