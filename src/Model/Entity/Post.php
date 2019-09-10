@@ -31,7 +31,8 @@ class Post extends Entity
         'content' => true,
         'created' => true,
         'modified' => true,
-        'user' => true
+        'user' => true,
+        'shareFrom' => true
     ];
      /* virtual fields */
     // protected $_virtual = ['avatar_of_curent_user'];

@@ -296,4 +296,31 @@ function likePost(elem,postId) {
     });
 }
 
+function sharePostPreview(postId){
+    $("#avatarOfUserPostShare").attr("src", $('#user-avatar-post-' + postId).attr('src'));
+    $("#nameOfUserPostShare").html($("#username-post-" + postId).text());
+    $("#textPostShare").text($('#text-post-' + postId).text());
+}
+
+function sharePost() {
+    var content = $.trim($("#textPostShare").text());
+    var shareFrom =  $.trim($("#nameOfUserPostShare").text());
+    $.ajax({
+        method: "POST",
+        url: '/blog/posts/sharePost',
+        dataType: 'json',
+        data: {
+            content : content,
+            shareFrom : shareFrom
+        },
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', $('[name="_csrfToken"]').val());
+        },
+        success: function (data) {
+            console.log(data);
+            $("#previewPostShareModal").modal("hide");
+        }
+    });
+}
+
 

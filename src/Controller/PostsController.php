@@ -175,4 +175,24 @@ class PostsController extends AppController {
         }
     }
 
+    public function sharePost() {
+        $this->layout = false;
+        $this->autoRender = false;  
+
+        if ($this->request->is('Ajax')) {
+            $post = $this->Posts->newEntity();
+            $data = $this->request->data;
+            $data['user_id'] = $this->Auth->user('id');
+            $post = $this->Posts->patchEntity($post,$data);
+            if ($this->Posts->save($post)) {
+                $options = array();
+                $options['contain'] = array('Users');
+                $newPost = $this->Posts->get($post->id,$options);
+                $this->response->body(json_encode($newPost));
+
+                return $this->response;
+            }
+        }
+    }
+
 }
