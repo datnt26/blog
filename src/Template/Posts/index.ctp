@@ -42,14 +42,13 @@
                               <div class="post-header">
                                  <div class="post-header-avatar">
                                     <a href="javascript:void(0)">
-                                       <?php echo $this->Html->image($post->user->avatar, array("alt" => "","class" => "media-object img-rounded post-user-avatar"))?>
+                                       <?php echo $this->Html->image($post->user->avatar, array("alt" => "","class" => "media-object img-rounded post-user-avatar","id" => "user-avatar-post-" . $post->id))?>
                                     </a>
                                  </div>
                                  <div class="post-header-body">
                                     <span>
-                                       <a href="javascript:void(0)">
-                                          <?php echo $post->user->username;?>
-                                       </a>
+                                       <a href="javascript:void(0)"  id = "<?php echo 'username-post-'.$post->id?>"><?php echo $post->user->username;?></a>
+                                       <?php echo ($post->shareFrom) ? " đã chia sẻ bài viết của <a href='javascript:void(0)'>" . $post->shareFrom . "</a>": "" ?>
                                     </span><br>
                                     <small><span><time>22 minutes</time></span><span>ago</span></small>
                                  </div>
@@ -98,14 +97,14 @@
                               </a>
                            </div>
                            <div align = "center" class = "col-xs-4 col-sm-4 col-md-4">
-                              <a href="javascript:void(0)">
+                              <a href="javascript:void(0)"> 
                                  <span  data-toggle="tooltip" data-placement="bottom" title="Comment">
                                     <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>  Comment
                                  </span>
                               </a>
                            </div>
                            <div align = "center" class = "col-xs-4 col-sm-4 col-md-4">
-                              <a href="javascript:void(0)">
+                              <a href="#previewPostShareModal" data-toggle="modal" onclick="sharePostPreview('<?php echo $post->id?>')">
                                  <span  data-toggle="tooltip" data-placement="bottom" title="Share">
                                     <span class="glyphicon glyphicon-share" aria-hidden="true"></span>  Share
                                  </span>
@@ -183,6 +182,7 @@
    </div>
 </div>
 <?php  echo $this->element('/Modal/confirm-delete-post-modal')?>  
+<?php  echo $this->element('/Modal/preview-post-share-modal')?> 
 <style type="text/css">
 textarea {
   resize: none;
