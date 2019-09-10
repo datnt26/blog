@@ -3,7 +3,7 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
-
+use Cake\Routing\Router;
 /**
  * Post Entity
  *
@@ -43,8 +43,9 @@ class Post extends Entity
     protected $_virtual = ['current_user_is_like_post'];
     
     protected function _getCurrentUserIsLikePost() {
+        $currentUserId = Router::getRequest()->getSession()->read('Auth.User.id');
         $like = TableRegistry::get('Likes');
-        $exists = $like->exists(['userId' => 1, 'postId' => $this->_properties['id']]);
+        $exists = $like->exists(['userId' => $currentUserId, 'postId' => $this->_properties['id']]);
         return ($exists) ? true : false;
     }
 

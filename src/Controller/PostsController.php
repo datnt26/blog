@@ -145,4 +145,34 @@ class PostsController extends AppController {
         }
     }
 
+    public function likePost() {
+        $this->layout = false;
+        $this->autoRender = false;  
+
+        if ($this->request->is('Ajax')) {
+            $this->loadModel('Likes');
+            $like = $this->Likes->newEntity();
+            $data = $this->request->data;
+            $conditions = ['userId' => $this->Auth->user('id'), 'postId' => $data['postId']];
+            $checkPostLiked = $this->Likes->exists($conditions);
+            if ($checkPostLiked) {
+                // unlike
+                $options = array('fields' => array('id'),'conditions' => $conditions);
+                $likeId = $this->Likes->find('all',$options)->toArray()[0]->id;
+                $likeItem = $this->Likes->get($likeId);
+                if ($this->Likes->delete($likeItem)) {
+                    $this->response->body(json_encode(array('isLike' => false)));
+                    return $this->response;
+                }
+            }
+            $data['userId'] = $this->Auth->user('id');
+            $like = $this->Likes->patchEntity($like,$data);
+            if ($this->Likes->save($like)) {
+                $this->response->body(json_encode(array('isLike' => true)));
+
+                return $this->response;
+            }
+        }
+    }
+
 }
