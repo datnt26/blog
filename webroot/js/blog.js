@@ -225,7 +225,7 @@ function createComment($this) {
                     return;
                 }
                 // when type of input is comment
-                var comment = $('<div>').attr({class: 'sub-comment-item'}).appendTo($('.comment-list#' + postId));
+                var comment = $('<div>').attr({class: 'comment'}).appendTo($('#comment-list-' + postId));
                 var comment_avatar_user = $('<div>').attr({class: 'comment-avatar-user'}).appendTo($(comment));
                 var link_comment_avatar_user = $('<a>').attr({href:'javascript:void(0)'}).appendTo($(comment_avatar_user))
                 $('<img>').attr({class:'media-object img-rounded comment-user-avatar',src:'/blog' + data.user.avatar}).appendTo($(link_comment_avatar_user));

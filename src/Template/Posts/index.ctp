@@ -25,7 +25,7 @@
          </div>
          <div class="col-xs-12 col-sm-8 col-md-6">
             <div class="input-group">
-               <input type="hidden" name="_csrfToken" value="<?= $this->request->getParam('_csrfToken'); ?>" />
+               <input type="hidden" name="_csrfToken" <?php echo "value = " . $this->request->getParam('_csrfToken'); ?> />
                <input class="post-message form-control" type="text" name="content" placeholder="Make a post...">
                <span class="input-group-btn">
                  <button class="post btn btn-success" type="submit" name="post">Post</button>
@@ -114,7 +114,7 @@
                      </div>
                      <!-- post footer -->
                      <div class="panel-footer">
-                        <div class = "comment-list" id = "<?php echo $post->id?>">
+                        <div class = "comment-list" <?php echo "id = comment-list-" . $post->id?> >
                            <?php foreach($post->comments as $comment) : ?>
                               <div class="comment">
                                  <div class="comment-avatar-user">
