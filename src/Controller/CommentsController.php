@@ -4,7 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 
 class CommentsController extends AppController {
-    
+
     public function index() {
         $data = array();
         /******** find all *********/
@@ -79,12 +79,11 @@ class CommentsController extends AppController {
             if (!$data['message']) return;
             $data['userId'] = $this->Auth->user('id');
             $comment = $this->Comments->patchEntity($comment,$data);
-            $this->log($comment);
             if ($this->Comments->save($comment)) {
                 $options = array();
                 $options['contain'] = array('Users');
                 $newComment = $this->Comments->get($comment->id,$options);
-                $this->response->body(json_encode($newComment));
+                $this->response->body(json_encode($newComment->toArray()));
 
                 return $this->response;
             }
