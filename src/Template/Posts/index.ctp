@@ -64,9 +64,7 @@
                                  </div>
                               </div>
                            </a>
-                           
-                        </h3>
-                        
+                        </h3>     
                      </div>
                      <!-- post body -->
                      <div class="panel-body">
@@ -74,24 +72,24 @@
                            <p class="text-post" id = "<?php echo 'text-post-'.$post->id?>">
                               <?php echo $post->content;?>
                            </p>
-                           <div class = "edit-post" id = "<?php echo 'edit-post-'.$post->id?>" style = "display:none;border:1px solid #CCCCCC;">
+                           <div class = "edit-post" id = "<?php echo 'edit-post-'.$post->id?>">
                               <textarea class = "edit-post-preview"><?php echo $post->content;?></textarea>
-                              <div class = "edit-post-action" style = "background-color:#EEEEEE;height: 45px;padding:5px;padding-top:7px;">
+                              <div class = "edit-post-action">
                                  <button class = "btn btn-danger pull-right" onclick="saveEditPost('<?php echo $post->id?>')">Lưu Lại</button>
-                                 <button class = "btn btn-info pull-right" style = "margin-right:5px"  onclick="cancelEditPost('<?php echo $post->id?>')">Hủy Bỏ</button>
+                                 <button class = "btn btn-info pull-right" onclick="cancelEditPost('<?php echo $post->id?>')">Hủy Bỏ</button>
                               </div>
                            </div>
                         </div>
-                        <div style = "border-top:2px solid #EDEDED;padding-top:10px">  
+                        <div class = "post-action-social">  
                            <div align = "center" class = "col-xs-4 col-sm-4 col-md-4">
-                              <a href="javascript:void(0)" style = "text-decoration:none" onclick="likePost(this,'<?php echo $post->id?>')">
+                              <a href="javascript:void(0)" onclick="likePost(this,'<?php echo $post->id?>')">
                                  <?php if($post->current_user_is_like_post) :?>
                                     <span  data-toggle="tooltip" data-placement="bottom" title="Like">
-                                       <i class="fa fa-thumbs-up" style = "color:blue;font-size:19px"></i> Like
+                                       <i class="fa fa-thumbs-up"></i> Like
                                     </span>
                                  <?php else:?>
                                     <span  data-toggle="tooltip" data-placement="bottom" title="Like">
-                                       <i style="font-size:19px" class="fa">&#xf087;</i> Like
+                                       <i class="fa">&#xf087;</i> Like
                                     </span>
                                  <?php endif?>
                               </a>
@@ -99,14 +97,14 @@
                            <div align = "center" class = "col-xs-4 col-sm-4 col-md-4">
                               <a href="javascript:void(0)"> 
                                  <span  data-toggle="tooltip" data-placement="bottom" title="Comment">
-                                    <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>  Comment
+                                    <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Comment
                                  </span>
                               </a>
                            </div>
                            <div align = "center" class = "col-xs-4 col-sm-4 col-md-4">
                               <a href="#previewPostShareModal" data-toggle="modal" onclick="sharePostPreview('<?php echo $post->id?>')">
                                  <span  data-toggle="tooltip" data-placement="bottom" title="Share">
-                                    <span class="glyphicon glyphicon-share" aria-hidden="true"></span>  Share
+                                    <span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share
                                  </span>
                               </a>
                            </div>
@@ -124,10 +122,12 @@
                                  </div>
                                  <div class = "comment-body" id = "<?php echo $comment->id?>">
                                     <div class = "sub-comment"  id = "<?php echo 'parent-comment-' . $comment->id?>">
-                                       <p class="" style = "margin: 0;padding: 0;"> 
-                                          <span><a href="javascript:void(0)"><?php echo $comment->user->username;?></a></span> <?php echo $comment->message;?> 
+                                       <p> 
+                                          <span>
+                                             <a href="javascript:void(0)"><?php echo $comment->user->username;?></a>
+                                          </span> <?php echo $comment->message;?> 
                                        </p>
-                                       <p class="comment" style = "margin: 0;padding: 0;"> 
+                                       <p> 
                                           <small>
                                              <span> <a href="javascript:void(0)">Like </a></span> 
                                              <span><a href="javascript:void(0)">Comment </a></span>
@@ -144,13 +144,19 @@
                                                       </a>
                                                    </div>
                                                    <div class="comment-body">
-                                                      <p style = "margin: 0;padding: 0;" class="comment"> 
+                                                      <p> 
                                                          <span>
                                                             <a href="javascript:void(0)"><?php echo $subComment->user->username?></a>
                                                          </span> <?php echo $subComment->message?> 
                                                       </p>
                                                       <div>
-                                                         <small><span> <a href="javascript:void(0)">Like </a></span> <span> <a href="javascript:void(0)">Comment </a></span></small><small><span><time>2 min </time></span><span>ago</span></small>
+                                                         <small>
+                                                            <span> <a href="javascript:void(0)">Like </a></span> 
+                                                            <span> <a href="javascript:void(0)">Comment </a></span>
+                                                         </small>
+                                                         <small>
+                                                            <span><time>2 min </time></span><span>ago</span>
+                                                         </small>
                                                       </div>
                                                    </div>
                                                 </div>
@@ -170,9 +176,9 @@
                   </div>
                <?php endforeach;?>
             </div>
-            <button  data-toggle="tooltip" data-placement="bottom" title="Load More" class = "btn btn-success load-more" type="button" style="margin-bottom:15px;width:100%;">
-                  LOAD MORE 
-               </button>
+            <button  data-toggle="tooltip" data-placement="bottom" title="Load More" class = "btn btn-success load-more" type="button">
+               LOAD MORE 
+            </button>
          </div>
          <!---Sidebar menu started-->
          <div class="hidden-xs hidden-sm col-md-3">
@@ -183,18 +189,3 @@
 </div>
 <?php  echo $this->element('/Modal/confirm-delete-post-modal')?>  
 <?php  echo $this->element('/Modal/preview-post-share-modal')?> 
-<style type="text/css">
-textarea {
-  resize: none;
-  width: 100%;
-  text-indent: 5px;
-  overflow:hidden;
-  height: auto;
-  border: none;
-    outline: none;
-
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-}
-</style>
