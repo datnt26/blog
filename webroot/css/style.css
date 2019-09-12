@@ -39,8 +39,56 @@ ul.dropdown-menu {
   height: 35px;
   width: 35px;
 }
+/* Panel Body */
 .panel-body {
-  padding-bottom: 10px;
+  padding: 10px !important;
+}
+.edit-post {
+  display:none;
+  border:1px solid #CCCCCC;
+}
+.edit-post > textarea {
+  resize: none;
+  width: 100%;
+  text-indent: 5px;
+  overflow:hidden;
+  height: auto;
+  border: none;
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.edit-post-action {
+  background-color:#EEEEEE;
+  height: 45px;
+  padding:5px;
+  padding-top:7px;
+}
+.edit-post-action > .btn-info {
+  margin-right:5px
+}
+.post-action-social {
+  border-top:2px solid #EDEDED;
+  padding-top:10px
+}
+.post-action-social > a {
+  text-decoration:none;
+}
+.fa-thumbs-up {
+  color:blue !important;
+  font-size:19px !important;
+}
+.fa {
+  font-size:19px !important;
+}
+.sub-comment > p {
+  margin: 0;
+  padding: 0;
+}
+.comment-body > p {
+  margin: 0;
+  padding: 0;
 }
 .comment-avatar-user {
   display: table-cell;
@@ -66,7 +114,7 @@ ul.dropdown-menu {
   margin-top: 15px;
 }
 .sub-comment-item {
-  margin-top : 5px;
+  margin-top : -5px;
 }
 .sub-comment-user-avatar {
   height: 20px;
@@ -77,6 +125,10 @@ ul.dropdown-menu {
   height:23px;
   width: 92%;
   margin-top: 10px;
+}
+.load-more {
+  margin-bottom:15px;
+  width:100%;
 }
 /*
   config css modal
