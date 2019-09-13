@@ -117,7 +117,7 @@
                               <div class="comment">
                                  <div class="comment-avatar-user">
                                     <a href="javascript:void(0)">
-                                       <?php echo $this->Html->image($comment->user->avatar, array("alt" => "","class" => "media-object img-rounded comment-user-avatar"))?>
+                                       <?php echo $this->Html->image($comment->user->avatar, array("height" => 27,"width" => 27,"class" => "media-object img-rounded","style" => "margin-top:-4px"))?>
                                     </a>
                                  </div>
                                  <div class = "comment-body" id = "<?php echo $comment->id?>">
@@ -170,7 +170,7 @@
                               </div> 
                            <?php endforeach?>
                         </div>
-                        <?php echo $this->Html->image($avatarCurrentUser, array("height" => 27,"width" => 27,"class" => "img-rounded"))?>
+                        <?php echo $this->Html->image($avatarCurrentUser, array("height" => 27,"width" => 27,"class" => "img-rounded","style" => "margin-top:-4px"))?>
                         <input class = "comment-typing" id = "<?php echo $post->id?>" placeholder=" Write a comment...">
                      </div>
                   </div>
