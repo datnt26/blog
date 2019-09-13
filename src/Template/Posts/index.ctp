@@ -28,48 +28,48 @@
                <input type="hidden" name="_csrfToken" <?php echo "value = " . $this->request->getParam('_csrfToken'); ?> />
                <input class="post-message form-control" type="text" name="content" placeholder="Make a post...">
                <span class="input-group-btn">
-                 <button class="post btn btn-success" type="submit" name="post">Post</button>
+                 <button class="btnPost btn btn-success" type="submit" name="post">Post</button>
                </span>
             </div><hr>
             <div id="main">
                <!--main-->
                <?php foreach($posts as $post) : ?>
-                  <div class="panel panel-default">
+                  <div class="post panel panel-default">
                      <!-- post header -->
-                     <div class="panel-heading" >
-                        <h3 class="panel-title">
+                     <div class="post-header panel-heading" >
+                        <div class="post-header-avatar">
                            <a href="javascript:void(0)">
-                              <div class="post-header">
-                                 <div class="post-header-avatar">
-                                    <a href="javascript:void(0)">
-                                       <?php echo $this->Html->image($post->user->avatar, array("alt" => "","class" => "media-object img-rounded post-user-avatar","id" => "user-avatar-post-" . $post->id))?>
-                                    </a>
-                                 </div>
-                                 <div class="post-header-body">
-                                    <span>
-                                       <a href="javascript:void(0)"  id = "<?php echo 'username-post-'.$post->id?>"><?php echo $post->user->username;?></a>
-                                       <?php echo ($post->shareFrom) ? " đã chia sẻ bài viết của <a href='javascript:void(0)'>" . $post->shareFrom . "</a>": "" ?>
-                                    </span><br>
-                                    <small><span><time>22 minutes</time></span><span>ago</span></small>
-                                 </div>
-                                 <div class="dropdown pull-right">
-                                    <p class = "post-action" data-toggle="dropdown">...</p>
-                                    <ul class="dropdown-menu">
-                                       <li class = "post-action-delete" data-id = <?php echo $post->id?> >
-                                          <a href="#confirmDeletePostModal" data-toggle="modal">Xóa</a></li>
-                                       <li class = "post-action-edit" id = "<?php echo $post->id?>" >
-                                          <a href="javascript:void(0)">Chỉnh Sửa</a>
-                                       </li>
-                                    </ul>
-                                 </div>
-                              </div>
+                              <?php echo $this->Html->image($post->user->avatar, array("height" => 35,"width" => 35,"class" => "media-object img-rounded","id" => "post-header-avatar-" . $post->id))?>
                            </a>
-                        </h3>     
+                        </div>
+                        <div class="post-header-title">
+                           <p>
+                              <a href="javascript:void(0)" id = "<?php echo 'post-header-title-username-'.$post->id?>">
+                                 <?php echo $post->user->username;?>
+                              </a>
+                              <?php echo ($post->shareFrom) ? " đã chia sẻ bài viết của <a href='javascript:void(0)'>" . $post->shareFrom . "</a>": "" ?>
+                           </p>
+                           <small>
+                              <span><time>22 minutes</time></span>
+                              <span>ago</span>
+                           </small>
+                        </div>
+                        <div class="post-header-action dropdown pull-right">
+                           <div class = "post-action-dropdown" data-toggle="dropdown">...</div>
+                           <ul class="dropdown-menu">
+                              <li class = "post-action-delete" data-id = <?php echo $post->id?> >
+                                 <a href="#confirmDeletePostModal" data-toggle="modal">Xóa</a>
+                              </li>
+                              <li class = "post-action-edit" id = "<?php echo $post->id?>" >
+                                 <a href="javascript:void(0)">Chỉnh Sửa</a>
+                              </li>
+                           </ul>
+                        </div>      
                      </div>
                      <!-- post body -->
-                     <div class="panel-body">
-                        <div>
-                           <p class="text-post" id = "<?php echo 'text-post-'.$post->id?>">
+                     <div class="post-body panel-body">
+                        <div class = "post-body-content">
+                           <p id = "<?php echo 'post-body-content-'.$post->id?>">
                               <?php echo $post->content;?>
                            </p>
                            <div class = "edit-post" id = "<?php echo 'edit-post-'.$post->id?>">
@@ -81,7 +81,7 @@
                            </div>
                         </div>
                         <div class = "post-action-social">  
-                           <div align = "center" class = "col-xs-4 col-sm-4 col-md-4">
+                           <div align = "center" class = "post-action-social-like col-xs-4 col-sm-4 col-md-4">
                               <a href="javascript:void(0)" onclick="likePost(this,'<?php echo $post->id?>')">
                                  <?php if($post->current_user_is_like_post) :?>
                                     <span  data-toggle="tooltip" data-placement="bottom" title="Like">
@@ -94,14 +94,14 @@
                                  <?php endif?>
                               </a>
                            </div>
-                           <div align = "center" class = "col-xs-4 col-sm-4 col-md-4">
+                           <div align = "center" class = "post-action-social-comment col-xs-4 col-sm-4 col-md-4">
                               <a href="javascript:void(0)"> 
                                  <span  data-toggle="tooltip" data-placement="bottom" title="Comment">
                                     <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Comment
                                  </span>
                               </a>
                            </div>
-                           <div align = "center" class = "col-xs-4 col-sm-4 col-md-4">
+                           <div align = "center" class = "post_action_social_share col-xs-4 col-sm-4 col-md-4">
                               <a href="#previewPostShareModal" data-toggle="modal" onclick="sharePostPreview('<?php echo $post->id?>')">
                                  <span  data-toggle="tooltip" data-placement="bottom" title="Share">
                                     <span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share
@@ -111,7 +111,7 @@
                         </div>
                      </div>
                      <!-- post footer -->
-                     <div class="panel-footer">
+                     <div class="post-footer panel-footer">
                         <div class = "comment-list" <?php echo "id = comment-list-" . $post->id?> >
                            <?php foreach($post->comments as $comment) : ?>
                               <div class="comment">
@@ -170,7 +170,7 @@
                               </div> 
                            <?php endforeach?>
                         </div>
-                        <?php echo $this->Html->image($avatarCurrentUser, array("alt" => "","class" => "img-rounded comment-user-avatar"))?>
+                        <?php echo $this->Html->image($avatarCurrentUser, array("height" => 27,"width" => 27,"class" => "img-rounded"))?>
                         <input class = "comment-typing" id = "<?php echo $post->id?>" placeholder=" Write a comment...">
                      </div>
                   </div>

@@ -65,7 +65,7 @@ class PostsController extends AppController {
         $this->layout = false;
 
         $post = $this->Posts->newEntity();
-        if ($this->request->is('Ajax')) {
+        if ($this->request->is('Ajax') && $this->request->data['content']) {
             $data = $this->request->data;
             $data['user_id'] = $this->Auth->user('id');
             $post = $this->Posts->patchEntity($post,$data);

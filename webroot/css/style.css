@@ -2,15 +2,15 @@
   config css post-action class
 
 */
-.post-action {
+.post-action-dropdown {
   font-size: 25px;
-  margin-top: -50px;
+  margin-top: -60px;
   cursor: pointer
 }
 
 ul.dropdown-menu {
    margin-right: -17px;
-   margin-top: -25px;
+   margin-top: -30px;
    padding: 0px;
 }
 .post-action-delete {
@@ -30,14 +30,13 @@ ul.dropdown-menu {
   display: table-cell;
   vertical-align: top
 }
-.post-header-body {
+.post-header-title {
   display: table-cell;
   vertical-align: top;
-  padding-left: 10px;
+  padding-left: 5px;
 }
-.post-user-avatar {
-  height: 35px;
-  width: 35px;
+.post-header-title > p {
+  margin: -2px 0px -2px 0px;
 }
 /* Panel Body */
 .panel-body {

@@ -3,27 +3,26 @@
       <div class="modal-content" style = "padding:0px 0px 15px 0px;">
          <div class="panel panel-default">
             <!-- post header -->
-            <div class="panel-heading" >
-               <h3 class="panel-title">
+            <div class="post-header panel-heading" >
+               <div class="post-header-avatar">
                   <a href="javascript:void(0)">
-                     <div class="post-header">
-                        <div class="post-header-avatar">
-                           <a href="javascript:void(0)">
-                              <?php echo $this->Html->image("/img/user.png", array("alt" => "","class" => "media-object img-rounded post-user-avatar","id" => "avatarOfUserPostShare"))?>
-                           </a>
-                        </div>
-                        <div class="post-header-body">
-                              <a href="javascript:void(0)" id = "nameOfUserPostShare" style = "float:left;"></a>
-                              <br>
-                           <small><span><time>22 minutes</time></span><span>ago</span></small>
-                        </div>
-                     </div>
+                     <?php echo $this->Html->image("/img/user.png", array("height" => 35,"width" => 35,"class" => "media-object img-rounded","id" => "avatarOfUserPostShare"))?>
                   </a>
-               </h3>
+               </div>
+               <div class="post-header-title">
+                  <p>
+                     <a href="javascript:void(0)" id = "nameOfUserPostShare" style = "float:left;"></a>
+                  </p>
+                  <br>
+                  <small>
+                     <span><time>22 minutes</time></span>
+                     <span>ago</span>
+                  </small>
+               </div>
             </div>
             <!-- post body -->
-            <div class="panel-body" style = "padding-bottom:0px">
-               <div>
+            <div class="post-body panel-body">
+               <div class = "post-body-content">
                   <p id = "textPostShare"></p>
                </div>
             </div>
