@@ -163,6 +163,26 @@ function appendComment(comment,postId) {
     $('<input>').attr({class:'comment-typing sub-comment-typing','id':postId,'placeholder':'Write a comment...'})
     .appendTo($(comment_body));
 }
+function appendSubComment(subComment,parentCommentId) {
+    var sub_comment_item = $('<div>').attr({class:'sub-comment-item',style:'margin-top:5px'}).appendTo($('#parent-comment-' + parentCommentId));
+    var commentDiv = $('<div>').appendTo($(sub_comment_item));
+    var comment_avatar_user = $('<div>').attr({class: 'comment-avatar-user'}).appendTo($(commentDiv));
+    $('<img>').attr({class:'media-object img-rounded','height':20,'width':20,style:'margin-bottom: 4px',src:'/blog'+subComment.user.avatar})
+    .appendTo($('<a>').attr({href:'javascript:void(0)'}).appendTo($(comment_avatar_user)));
+    var comment_body = $('<div>').attr({class:'comment-body'}).appendTo($(commentDiv));
+    var sub_comment_message = $('<div>').attr({class:'sub-comment-message'}).appendTo($(comment_body));
+    $('<a>').attr({href:'javascript:void(0)'}).html(subComment.user.username)
+    .appendTo($('<span>').appendTo($(sub_comment_message)));
+    sub_comment_message.append(' ' + subComment.message);
+    var sub_comment_action_social = $('<div>').attr({class: 'sub-comment-action-social'}).appendTo($(comment_body));
+    var small_comment_action_social = $('<small>').appendTo($(sub_comment_action_social));
+    $('<a>').attr({href:'javascript:void(0)'}).html('Like').appendTo($('<span>').appendTo($(small_comment_action_social)));
+    $('<a>').attr({href:'javascript:void(0)'}).html(' Comment').appendTo($('<span>').appendTo($(small_comment_action_social)));
+    var small_comment_time = $('<small>').appendTo($(sub_comment_action_social));
+    $('<time>').html(' 22 min ').appendTo($('<span>').appendTo($(small_comment_time)));
+    $('<span>').html(' ago').appendTo($(small_comment_time));
+}
+
 function createComment($this) {
     var postId = $this.attr('id');
     var parent_id = null;
@@ -187,15 +207,7 @@ function createComment($this) {
                 $('input').val('');
                 if (type.includes('sub-comment-typing')) {
                     // init new post
-                    var sub_comment_item = $('<div>').attr({class: 'sub-comment-item'}).appendTo($('.sub-comment#parent-comment-' + parent_id));
-                    var comment = $('<div>').attr({class: 'comment'}).appendTo($(sub_comment_item));
-                    var comment_avatar_user = $('<div>').attr({class: 'comment-avatar-user'}).appendTo($(comment));
-                    var link_comment_avatar_user = $('<a>').attr({href:'javascript:void(0)'}).appendTo($(comment_avatar_user))
-                    $('<img>').attr({class:'media-object img-rounded sub-comment-user-avatar',src:'/blog' + data.user.avatar}).appendTo($(link_comment_avatar_user));
-                    var comment_body = $('<div>').attr({class: 'comment-body'}).appendTo($(comment));
-                    var comment_body_content = $('<p>').attr({class: 'comment',style:'margin: 0;padding: 0;'}).appendTo($(comment_body));
-                    $(comment_body_content).append('<span>'+'<a href="javascript:void(0">'+data.user.username+'</a>'+'</span> '+data.message);
-                    $(comment_body).append('<div><small><span><a href="javascript:void(0)">Like </a></span> <span> <a href="javascript:void(0)">Comment </a></span></small><small><span><time>2 min </time></span><span>ago</span></small></div>');
+                    appendSubComment(data,parent_id);
                     return;
                 }
                 // when type of input is comment
