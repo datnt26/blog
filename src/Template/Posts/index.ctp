@@ -147,12 +147,11 @@
                                                       </a>
                                                    </div>
                                                    <div class="comment-body">
-                                                      <p> 
+                                                      <div class = "sub-comment-message"> 
                                                          <span>
                                                             <a href="javascript:void(0)"><?php echo $subComment->user->username?></a>
                                                          </span> <?php echo $subComment->message?> 
-                                                      </p>
-                                                      <div>
+                                                      <div class = "sub-comment-action-social">
                                                          <small>
                                                             <span> <a href="javascript:void(0)">Like </a></span> 
                                                             <span> <a href="javascript:void(0)">Comment </a></span>
