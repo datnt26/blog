@@ -112,6 +112,9 @@ ul.dropdown-menu {
   width: 92%;
   margin-top: 15px;
 }
+.parent-comment-message {
+  margin-top: -5px;
+}
 .sub-comment-item {
   margin-top : -5px;
 }

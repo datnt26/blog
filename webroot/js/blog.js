@@ -142,18 +142,26 @@ function appendPost(listPost) {
     $('<input>').attr({class:'comment-typing','id':listPost.id,'placeholder':'Write a comment...'}).appendTo($(post_footer));
 }
 function appendComment(comment,postId) {
-    var comment = $('<div>').attr({class:'comment'}).appendTo($('#comment-list-' + postId));
-    var comment_avatar_user = $('<div>').attr({class: 'comment-avatar-user'}).appendTo($(comment));
-    $('<img>').attr({class:'media-object img-rounded',style:'margin-top:-4px',src:'/blog'+comment.user.avatar})
+    var commentDiv = $('<div>').attr({class:'comment'}).appendTo($('#comment-list-' + postId));
+    var comment_avatar_user = $('<div>').attr({class: 'comment-avatar-user'}).appendTo($(commentDiv));
+    $('<img>').attr({class:'media-object img-rounded','height':27,'width':27,style:'margin-top:-4px',src:'/blog'+comment.user.avatar})
     .appendTo($('<a>').attr({href:'javascript:void(0)'}).appendTo($(comment_avatar_user)));
-    var comment_body = $('<div>').attr({class:'comment-body',id:data.id}).appendTo($(comment));
-    var sub_comment = $('<div>').attr({class:'sub-comment',id:'parent-comment-' + data.id}).appendTo($(comment_body));
-    
-    var comment_body_content = $('<p>').attr({class: 'comment',style:'margin: 0;padding: 0;'}).appendTo($(sub_comment));
-    $(comment_body_content).append('<span>'+'<a href="javascript:void(0">'+data.user.username+'</a>'+'</span> '+data.message);
-    $(sub_comment).append('<p class="comment" style = "margin: 0;padding: 0;"><small><span><a href="javascript:void(0)">Like </a></span> <span> <a href="javascript:void(0)">Comment </a></span></small><small><span><time>2 min </time></span><span>ago</span></small></p>');
-    $('<img>').attr({class:'img-rounded sub-comment-user-avatar',src:'/blog' + data.user.avatar}).appendTo($(comment_body));
-    $('<input>').attr({class:'comment-typing sub-comment-typing',id:postId,placeholder:'Write a comment...',style:'margin-left:3px;'}).appendTo($(comment_body));
+    var comment_body = $('<div>').attr({class:'comment-body',id:comment.id}).appendTo($(commentDiv));
+    var parent_comment = $('<div>').attr({class:'parent-comment',id:'parent-comment-' + comment.id}).appendTo($(comment_body));
+    var parent_comment_message = $('<div>').attr({class:'parent-comment-message'}).appendTo($(parent_comment));
+    $('<a>').attr({href:'javascript:void(0)'}).html(comment.user.username)
+    .appendTo($('<span>').appendTo($(parent_comment_message)));
+    parent_comment_message.append(' ' + comment.message);
+    var parent_comment_action_social = $('<div>').attr({class: 'parent-comment-action-social'}).appendTo($(parent_comment));
+    var small_comment_action_social = $('<small>').appendTo($(parent_comment_action_social));
+    $('<a>').attr({href:'javascript:void(0)'}).html('Like').appendTo($('<span>').appendTo($(small_comment_action_social)));
+    $('<a>').attr({href:'javascript:void(0)'}).html(' Comment').appendTo($('<span>').appendTo($(small_comment_action_social)));
+    var small_comment_time = $('<small>').appendTo($(parent_comment_action_social));
+    $('<time>').html(' 22 min ').appendTo($('<span>').appendTo($(small_comment_time)));
+    $('<span>').html(' ago').appendTo($(small_comment_time));
+    $('<img>').attr({class:'img-rounded','height':20,'width':20,'style':'margin:0px 3px 4px 0px','src':'/blog/img/avatar.jpg'}).appendTo($(comment_body));
+    $('<input>').attr({class:'comment-typing sub-comment-typing','id':postId,'placeholder':'Write a comment...'})
+    .appendTo($(comment_body));
 }
 function createComment($this) {
     var postId = $this.attr('id');
@@ -191,7 +199,7 @@ function createComment($this) {
                     return;
                 }
                 // when type of input is comment
-                
+                appendComment(data,postId);
             }
     });
 }
