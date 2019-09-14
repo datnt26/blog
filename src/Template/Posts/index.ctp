@@ -117,30 +117,33 @@
                               <div class="comment">
                                  <div class="comment-avatar-user">
                                     <a href="javascript:void(0)">
-                                       <?php echo $this->Html->image($comment->user->avatar, array("alt" => "","class" => "media-object img-rounded comment-user-avatar"))?>
+                                       <?php echo $this->Html->image($comment->user->avatar, array("height" => 27,"width" => 27,"class" => "media-object img-rounded","style" => "margin-top:-4px"))?>
                                     </a>
                                  </div>
                                  <div class = "comment-body" id = "<?php echo $comment->id?>">
-                                    <div class = "sub-comment"  id = "<?php echo 'parent-comment-' . $comment->id?>">
-                                       <p> 
+                                    <div class = "parent-comment" id = "<?php echo 'parent-comment-' . $comment->id?>">
+                                       <div class = "parent-comment-message"> 
                                           <span>
                                              <a href="javascript:void(0)"><?php echo $comment->user->username;?></a>
                                           </span> <?php echo $comment->message;?> 
-                                       </p>
-                                       <p> 
+                                       </div>
+                                       <div class = "parent-comment-action-social"> 
                                           <small>
                                              <span> <a href="javascript:void(0)">Like </a></span> 
                                              <span><a href="javascript:void(0)">Comment </a></span>
                                           </small> 
-                                          <small><span><time>22 min </time></span><span>ago</span></small>
-                                       </p>
+                                          <small>
+                                             <span><time>22 min </time></span>
+                                             <span>ago</span>
+                                          </small>
+                                       </div>
                                        <?php if($comment->children_comments) : ?>
                                           <?php foreach($comment->children_comments as $subComment) : ?>
                                              <div class = "sub-comment-item">
                                                 <div class = "comment">
                                                    <div class = "comment-avatar-user">
                                                       <a href="javascript:void(0)">
-                                                         <?php echo $this->Html->image($subComment->user->avatar, array("alt" => "","class" => "media-object img-rounded sub-comment-user-avatar"))?>
+                                                         <?php echo $this->Html->image($subComment->user->avatar, array("height" => 20,"width" => 20,"class" => "media-object img-rounded","style" => "margin-bottom: 4px"))?>
                                                       </a>
                                                    </div>
                                                    <div class="comment-body">
@@ -164,13 +167,13 @@
                                           <?php endforeach?>
                                        <?php endif?>
                                     </div>
-                                    <?php echo $this->Html->image($avatarCurrentUser, array("alt" => "","class" => "img-rounded sub-comment-user-avatar"))?>
+                                    <?php echo $this->Html->image($avatarCurrentUser, array("height" => 20,"width" => 20,"class" => "img-rounded","style" => "margin-bottom: 4px"))?>
                                     <input class = "comment-typing sub-comment-typing" id = "<?php echo $post->id?>" placeholder=" Write a comment...">
                                  </div>
                               </div> 
                            <?php endforeach?>
                         </div>
-                        <?php echo $this->Html->image($avatarCurrentUser, array("height" => 27,"width" => 27,"class" => "img-rounded"))?>
+                        <?php echo $this->Html->image($avatarCurrentUser, array("height" => 27,"width" => 27,"class" => "img-rounded","style" => "margin-top:-4px"))?>
                         <input class = "comment-typing" id = "<?php echo $post->id?>" placeholder=" Write a comment...">
                      </div>
                   </div>
