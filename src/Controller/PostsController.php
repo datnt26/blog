@@ -71,9 +71,11 @@ class PostsController extends AppController {
             $post = $this->Posts->patchEntity($post,$data);
             if ($this->Posts->save($post)) {
                 $options = array();
-                $options['contain'] = array('Users');
-                $newPost = $this->Posts->get($post->id,$options);
-                $this->response->body(json_encode($newPost));
+                $options['contain'] = array('Users','Comments' => 'Users');
+                $options['order'] = array('Posts.created DESC');
+                $options['limit'] = 5;
+                $posts = $this->Posts->find('all',$options);
+                $this->response->body(json_encode($posts));
 
                 return $this->response;
             }
@@ -89,19 +91,19 @@ class PostsController extends AppController {
             $data = $this->request->data;
             $currentPage = $data['currentPage'];
             $options = array();
-            $options['contain'] = array('Users');
+            $options['contain'] = array('Users','Comments.Users');
             $options['order'] = array('Posts.created DESC');
             $options['limit'] = 5;
             $options['offset'] = $currentPage * 5;
             $posts = $this->Posts->find('all',$options);
             // format posts
-            $posts->formatResults(function (\Cake\Collection\CollectionInterface $results) {
-                return $results->map(function ($row) {
-                    $row['Comment'] = json_decode($this->requestAction('/comments/getAllComment/' . $row['id']));
-                    return $row;
-                });
-            });
-            $this->log($posts->toArray());
+            // $posts->formatResults(function (\Cake\Collection\CollectionInterface $results) {
+            //     return $results->map(function ($row) {
+            //         $row['Comment'] = json_decode($this->requestAction('/comments/getAllComment/' . $row['id']));
+            //         return $row;
+            //     });
+            // });
+            // $this->log($posts->toArray());
             $this->response->body(json_encode($posts));
 
             return $this->response;
@@ -186,9 +188,11 @@ class PostsController extends AppController {
             $post = $this->Posts->patchEntity($post,$data);
             if ($this->Posts->save($post)) {
                 $options = array();
-                $options['contain'] = array('Users');
-                $newPost = $this->Posts->get($post->id,$options);
-                $this->response->body(json_encode($newPost));
+                $options['contain'] = array('Users','Comments' => 'Users');
+                $options['order'] = array('Posts.created DESC');
+                $options['limit'] = 5;
+                $posts = $this->Posts->find('all',$options);
+                $this->response->body(json_encode($posts));
 
                 return $this->response;
             }

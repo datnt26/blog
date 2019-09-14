@@ -39,7 +39,10 @@ $(document).ready(function() {
                     xhr.setRequestHeader('X-CSRF-Token', $('[name="_csrfToken"]').val());
                 },
                 success: function (data) {
-                    appendPost(data);
+                    $('#main').empty();
+                    $.each(data, function(k,v) {
+                        appendPost(v);
+                    });
                     //empty input after create post success
                     $('.post-message').val('');
                 }
@@ -60,7 +63,9 @@ $(document).ready(function() {
                     xhr.setRequestHeader('X-CSRF-Token', $('[name="_csrfToken"]').val());
                 },
                 success: function (data) {
-                    appendPost(data);
+                    $.each(data, function(k,v) {
+                        appendPost(v);
+                    });
                 }
             });
     });
@@ -82,9 +87,13 @@ function appendPost(listPost) {
     .appendTo($('<a>').attr({'href':'javascript:void(0)'}).appendTo(post_header_avatar));
     // post header title
     var post_header_title = $('<div>').attr({class:'post-header-title'}).appendTo($(post_header));
+    var p_post_header_title = $('<p>').appendTo($(post_header_title));
     $('<a>').attr({'href':'javascript:void(0)','id':'post-header-title-username-'+listPost.id}).html(listPost.user.username)
-    .appendTo($('<p>').appendTo(post_header_title));
-    var small = $('<small>').appendTo(post_header_title);
+    .appendTo($(p_post_header_title));
+    if (listPost.shareFrom) {
+        p_post_header_title.append(' đã chia sẻ bài viết của <a href="javascript:void(0)">' + listPost.shareFrom + '</a>');
+    }
+    var small = $('<small>').appendTo($(post_header_title));
     $('<time>').html('22 minutes').appendTo('<span>').appendTo(small);
     $('<span>').html('ago').appendTo(small);
     // post header title
@@ -137,7 +146,11 @@ function appendPost(listPost) {
     /******* Part footer of post *******/
     var post_footer = $('<div>').attr({class:'post-footer panel-footer'}).appendTo($(post));
     var comment_list = $('<div>').attr({class:'comment-list','id':'comment-list-'+listPost.id}).appendTo($(post_footer));
-
+    if (listPost.comments.length > 0) {
+        $.each(listPost.comments, function(key,comment) {
+            appendComment(comment,listPost.id);
+        });
+    }
     $('<img>').attr({class:'img-rounded','height':27,'width':27,'style':'margin:-4px 3px 0px 0px','src':'/blog/img/avatar.jpg'}).appendTo($(post_footer));
     $('<input>').attr({class:'comment-typing','id':listPost.id,'placeholder':'Write a comment...'}).appendTo($(post_footer));
 }
@@ -159,6 +172,11 @@ function appendComment(comment,postId) {
     var small_comment_time = $('<small>').appendTo($(parent_comment_action_social));
     $('<time>').html(' 22 min ').appendTo($('<span>').appendTo($(small_comment_time)));
     $('<span>').html(' ago').appendTo($(small_comment_time));
+    if (comment.children_comments.length > 0) {
+        $.each(comment.children_comments, function(key,childrenComment) {
+            appendSubComment(childrenComment,comment.id);
+        });
+    }
     $('<img>').attr({class:'img-rounded','height':20,'width':20,'style':'margin:0px 3px 4px 0px','src':'/blog/img/avatar.jpg'}).appendTo($(comment_body));
     $('<input>').attr({class:'comment-typing sub-comment-typing','id':postId,'placeholder':'Write a comment...'})
     .appendTo($(comment_body));
@@ -294,6 +312,10 @@ function sharePost() {
         },
         success: function (data) {
             console.log(data);
+            $('#main').empty();
+            $.each(data, function(k,v) {
+                appendPost(v);
+            });
             $("#previewPostShareModal").modal("hide");
         }
     });
